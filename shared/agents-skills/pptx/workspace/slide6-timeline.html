@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+html { background: #ffffff; }
+body {
+  width: 720pt; height: 405pt; margin: 0; padding: 0;
+  background: #F8FAFC; font-family: Arial, sans-serif;
+  display: flex; flex-direction: column;
+}
+.header {
+  background: #0F172A; padding: 20pt 40pt;
+  border-bottom: 4pt solid #0369A1;
+}
+.header h1 {
+  color: #ffffff; font-size: 28pt;
+  font-weight: bold; margin: 0;
+}
+.content {
+  flex: 1; padding: 30pt 40pt;
+  display: flex; gap: 25pt;
+}
+.phase {
+  flex: 1; background: #ffffff;
+  border: 2pt solid #E2E8F0;
+  padding: 20pt; text-align: center;
+}
+.phase-top {
+  height: 4pt; background: #0369A1;
+  margin: -20pt -20pt 15pt;
+}
+.phase-number-box {
+  background: #0F172A;
+  width: 70pt; height: 70pt;
+  margin: 0 auto 15pt;
+  border: 4pt solid #ffffff;
+  box-shadow: 0 0 0 2pt #0F172A;
+  display: inline-block;
+  text-align: center;
+}
+.phase-number {
+  color: #ffffff; font-weight: bold;
+  font-size: 20pt; line-height: 70pt;
+}
+.phase-title {
+  font-size: 14pt; font-weight: bold;
+  color: #0F172A; margin-bottom: 10pt;
+}
+.phase-desc {
+  font-size: 11pt; color: #475569;
+  line-height: 1.5; text-align: left;
+}
+</style>
+</head>
+<body>
+<div class="header">
+  <h1>技术实现路径</h1>
+</div>
+<div class="content">
+  <div class="phase">
+    <div class="phase-top"></div>
+    <div class="phase-number-box">
+      <p class="phase-number">3月</p>
+    </div>
+    <p class="phase-title">第一阶段：MVP验证</p>
+    <p class="phase-desc">完成1-2个名人形象的AI茶宠原型，验证语音克隆+对话系统技术可行性，小范围用户测试（N=50）</p>
+  </div>
+
+  <div class="phase">
+    <div class="phase-top"></div>
+    <div class="phase-number-box">
+      <p class="phase-number">6月</p>
+    </div>
+    <p class="phase-title">第二阶段：产品化</p>
+    <p class="phase-desc">留守儿童父母陪伴人偶量产，完善伦理审核与安全防护机制，建立供应链与销售渠道</p>
+  </div>
+
+  <div class="phase">
+    <div class="phase-top"></div>
+    <div class="phase-number-box">
+      <p class="phase-number">12月</p>
+    </div>
+    <p class="phase-title">第三阶段：规模化</p>
+    <p class="phase-desc">拓展更多名人形象与场景，开发APP生态与内容社区，探索B端企业定制市场</p>
+  </div>
+</div>
+</body>
+</html>

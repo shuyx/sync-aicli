@@ -1,0 +1,798 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>抖音AI赋能项目 - 业务价值与风险分析</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600;700&family=Fira+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            /* Design System Colors */
+            --primary: #1E40AF;
+            --secondary: #3B82F6;
+            --cta: #F59E0B;
+            --bg: #F8FAFC;
+            --text: #1E3A8A;
+            --card-bg: #FFFFFF;
+            --glass-bg: rgba(255, 255, 255, 0.15);
+            --glass-border: rgba(255, 255, 255, 0.2);
+
+            /* Bento Grid */
+            --grid-gap: 20px;
+            --card-radius: 24px;
+            --shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+            --hover-scale: 1.02;
+
+            /* Risk Colors */
+            --risk-critical: #DC2626;
+            --risk-high: #EA580C;
+            --risk-medium: #F59E0B;
+            --risk-low: #16A34A;
+
+            /* Glassmorphism */
+            --blur-amount: 15px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+
+        body {
+            font-family: 'Fira Sans', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
+            background-attachment: fixed;
+            color: var(--text);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Glassmorphic Header */
+        .header {
+            position: relative;
+            padding: 4rem 2rem;
+            margin: 2rem;
+            border-radius: var(--card-radius);
+            background: var(--glass-bg);
+            backdrop-filter: blur(var(--blur-amount));
+            -webkit-backdrop-filter: blur(var(--blur-amount));
+            border: 1px solid var(--glass-border);
+            box-shadow: 0 8px 32px rgba(31, 38, 135, 0.15);
+            overflow: hidden;
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -10%;
+            width: 300px;
+            height: 300px;
+            background: radial-gradient(circle, rgba(251, 191, 36, 0.3), transparent);
+            border-radius: 50%;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translate(0, 0); }
+            50% { transform: translate(-20px, -20px); }
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 0.5rem 1.5rem;
+            background: rgba(251, 191, 36, 0.2);
+            border: 1px solid rgba(251, 191, 36, 0.5);
+            color: #FFF;
+            border-radius: 50px;
+            font-size: 0.875rem;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            margin-bottom: 1rem;
+            backdrop-filter: blur(10px);
+        }
+
+        .header h1 {
+            font-family: 'Fira Code', monospace;
+            font-size: 3.5rem;
+            font-weight: 700;
+            color: #FFFFFF;
+            margin-bottom: 1rem;
+            line-height: 1.2;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .header-subtitle {
+            font-size: 1.25rem;
+            color: rgba(255, 255, 255, 0.9);
+            max-width: 900px;
+            font-weight: 300;
+        }
+
+        /* Main Container */
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 2rem 4rem;
+        }
+
+        /* Bento Grid */
+        .bento-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            grid-auto-rows: 200px;
+            gap: var(--grid-gap);
+            margin-bottom: 2rem;
+        }
+
+        .bento-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(var(--blur-amount));
+            -webkit-backdrop-filter: blur(var(--blur-amount));
+            border: 1px solid var(--glass-border);
+            border-radius: var(--card-radius);
+            padding: 2rem;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .bento-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), transparent);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .bento-card:hover {
+            transform: scale(var(--hover-scale));
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2);
+        }
+
+        .bento-card:hover::before {
+            opacity: 1;
+        }
+
+        /* Bento Card Sizes */
+        .span-2x1 { grid-column: span 2; }
+        .span-1x2 { grid-row: span 2; }
+        .span-2x2 { grid-column: span 2; grid-row: span 2; }
+        .span-3x1 { grid-column: span 3; }
+        .span-4x1 { grid-column: span 4; }
+
+        /* Business Direction Cards */
+        .business-card {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .business-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.1));
+        }
+
+        .business-title {
+            font-family: 'Fira Code', monospace;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #FFFFFF;
+            margin-bottom: 0.5rem;
+            line-height: 1.3;
+        }
+
+        .business-meta {
+            font-size: 0.875rem;
+            color: rgba(255, 255, 255, 0.8);
+            margin-bottom: 1rem;
+        }
+
+        .market-badge {
+            display: inline-block;
+            background: linear-gradient(135deg, rgba(251, 191, 36, 0.3), rgba(245, 158, 11, 0.3));
+            border: 1px solid rgba(251, 191, 36, 0.5);
+            color: #FFF;
+            padding: 0.5rem 1rem;
+            border-radius: 12px;
+            font-family: 'Fira Code', monospace;
+            font-weight: 600;
+            font-size: 1rem;
+        }
+
+        /* Value/Pain Cards */
+        .value-card, .pain-card {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .card-icon {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        .card-title {
+            font-family: 'Fira Code', monospace;
+            font-size: 1.125rem;
+            font-weight: 600;
+            color: #FFFFFF;
+            margin-bottom: 0.5rem;
+        }
+
+        .card-desc {
+            font-size: 0.9375rem;
+            color: rgba(255, 255, 255, 0.85);
+            line-height: 1.6;
+        }
+
+        /* Risk Matrix - Heat Map Style */
+        .risk-matrix {
+            background: var(--glass-bg);
+            backdrop-filter: blur(var(--blur-amount));
+            -webkit-backdrop-filter: blur(var(--blur-amount));
+            border: 1px solid var(--glass-border);
+            border-radius: var(--card-radius);
+            padding: 2rem;
+            overflow: hidden;
+        }
+
+        .section-title {
+            font-family: 'Fira Code', monospace;
+            font-size: 2rem;
+            font-weight: 700;
+            color: #FFFFFF;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .section-title::before {
+            content: '';
+            width: 8px;
+            height: 8px;
+            background: var(--cta);
+            border-radius: 50%;
+            box-shadow: 0 0 20px var(--cta);
+        }
+
+        .risk-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1rem;
+        }
+
+        .risk-item {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            padding: 1.5rem;
+            border-left: 4px solid;
+            transition: all 0.3s ease;
+        }
+
+        .risk-item:hover {
+            background: rgba(255, 255, 255, 0.15);
+            transform: translateX(4px);
+        }
+
+        .risk-critical { border-left-color: var(--risk-critical); }
+        .risk-high { border-left-color: var(--risk-high); }
+        .risk-medium { border-left-color: var(--risk-medium); }
+
+        .risk-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .risk-type {
+            font-family: 'Fira Code', monospace;
+            font-weight: 600;
+            color: #FFFFFF;
+            font-size: 1.125rem;
+        }
+
+        .risk-level {
+            padding: 0.375rem 0.875rem;
+            border-radius: 8px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .risk-level-critical { background: var(--risk-critical); color: white; }
+        .risk-level-high { background: var(--risk-high); color: white; }
+        .risk-level-medium { background: var(--risk-medium); color: white; }
+
+        .risk-details {
+            font-size: 0.875rem;
+            color: rgba(255, 255, 255, 0.75);
+            margin-bottom: 0.75rem;
+        }
+
+        .risk-strategy {
+            font-size: 0.875rem;
+            color: rgba(255, 255, 255, 0.9);
+            padding: 0.75rem;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 8px;
+            border-left: 2px solid var(--cta);
+        }
+
+        /* Timeline - Line Chart Style */
+        .timeline-container {
+            background: var(--glass-bg);
+            backdrop-filter: blur(var(--blur-amount));
+            -webkit-backdrop-filter: blur(var(--blur-amount));
+            border: 1px solid var(--glass-border);
+            border-radius: var(--card-radius);
+            padding: 2rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .timeline {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+            margin-top: 2rem;
+            position: relative;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            top: 50px;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--secondary), var(--cta));
+            opacity: 0.5;
+            z-index: 0;
+        }
+
+        .timeline-phase {
+            position: relative;
+            z-index: 1;
+        }
+
+        .timeline-marker {
+            width: 100px;
+            height: 100px;
+            background: linear-gradient(135deg, var(--secondary), var(--cta));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Fira Code', monospace;
+            font-weight: 700;
+            color: white;
+            font-size: 1.25rem;
+            margin: 0 auto 1.5rem;
+            box-shadow: 0 10px 30px rgba(59, 130, 246, 0.3);
+            position: relative;
+        }
+
+        .timeline-marker::after {
+            content: '';
+            position: absolute;
+            width: 120%;
+            height: 120%;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            animation: pulse 2s ease-out infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); opacity: 1; }
+            100% { transform: scale(1.5); opacity: 0; }
+        }
+
+        .timeline-content {
+            text-align: center;
+        }
+
+        .timeline-title {
+            font-family: 'Fira Code', monospace;
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: #FFFFFF;
+            margin-bottom: 0.75rem;
+        }
+
+        .timeline-desc {
+            font-size: 0.9375rem;
+            color: rgba(255, 255, 255, 0.8);
+            line-height: 1.6;
+        }
+
+        /* Revenue Cards */
+        .revenue-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: var(--grid-gap);
+            margin-top: 2rem;
+        }
+
+        .revenue-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(var(--blur-amount));
+            -webkit-backdrop-filter: blur(var(--blur-amount));
+            border: 1px solid var(--glass-border);
+            border-radius: var(--card-radius);
+            padding: 2.5rem;
+            text-align: center;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .revenue-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 200px;
+            height: 200px;
+            background: radial-gradient(circle, rgba(251, 191, 36, 0.2), transparent);
+            border-radius: 50%;
+        }
+
+        .revenue-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        }
+
+        .revenue-period {
+            font-size: 0.875rem;
+            color: rgba(255, 255, 255, 0.7);
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 0.5rem;
+        }
+
+        .revenue-amount {
+            font-family: 'Fira Code', monospace;
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #FFFFFF;
+            margin-bottom: 0.5rem;
+            text-shadow: 0 0 20px rgba(251, 191, 36, 0.5);
+        }
+
+        .revenue-label {
+            font-size: 0.9375rem;
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .bento-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .timeline {
+                grid-template-columns: 1fr;
+            }
+
+            .timeline::before {
+                top: 0;
+                left: 50px;
+                right: auto;
+                bottom: 0;
+                width: 3px;
+                height: auto;
+            }
+
+            .revenue-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2.5rem;
+            }
+
+            .bento-grid {
+                grid-template-columns: 1fr;
+                grid-auto-rows: auto;
+            }
+
+            .span-2x1, .span-1x2, .span-2x2, .span-3x1, .span-4x1 {
+                grid-column: span 1;
+                grid-row: span 1;
+            }
+
+            .risk-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Scroll Reveal */
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Focus States for Accessibility */
+        .bento-card:focus,
+        .revenue-card:focus {
+            outline: 3px solid var(--cta);
+            outline-offset: 4px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Glassmorphic Header -->
+    <header class="header">
+        <span class="badge">战略分析报告 · 2026</span>
+        <h1>抖音AI赋能项目<br>业务价值与风险分析</h1>
+        <p class="header-subtitle">基于3D打印 + 语音克隆 + 大语言模型的AI情感陪伴与智能交互产品矩阵</p>
+    </header>
+
+    <main class="container">
+        <!-- Business Directions - Bento Grid -->
+        <section class="reveal">
+            <div class="bento-grid">
+                <!-- Business Card 1 -->
+                <div class="bento-card span-2x2 business-card" tabindex="0" role="article" aria-label="AI留守儿童父母陪伴人偶">
+                    <div>
+                        <div class="business-icon">👨‍👩‍👧</div>
+                        <h3 class="business-title">AI留守儿童<br>父母陪伴人偶</h3>
+                        <p class="business-meta">目标用户：留守儿童（6-14岁）<br>核心价值：缓解分离孤独感，提供情感陪伴</p>
+                    </div>
+                    <div class="market-badge">市场规模 ¥10亿+</div>
+                </div>
+
+                <!-- Business Card 2 -->
+                <div class="bento-card span-2x2 business-card" tabindex="0" role="article" aria-label="AI过世亲人纪念对话系统">
+                    <div>
+                        <div class="business-icon">🕊️</div>
+                        <h3 class="business-title">AI过世亲人<br>纪念对话系统</h3>
+                        <p class="business-meta">目标用户：失去亲人的成年人及家庭<br>核心价值：保留声音记忆，缓解哀伤情绪</p>
+                    </div>
+                    <div class="market-badge">市场规模 ¥50亿+</div>
+                </div>
+
+                <!-- Business Card 3 -->
+                <div class="bento-card span-4x1 business-card" tabindex="0" role="article" aria-label="AI茶宠商界名人智能对话">
+                    <div style="display: flex; align-items: center; justify-content: space-between; gap: 2rem;">
+                        <div style="flex: 1;">
+                            <div class="business-icon">🫖</div>
+                            <h3 class="business-title">AI茶宠 · 商界名人智能对话</h3>
+                            <p class="business-meta">目标用户：创业者、企业主、商业爱好者 | 核心价值：商业咨询，启发创业思维</p>
+                        </div>
+                        <div class="market-badge">市场规模 ¥20亿+</div>
+                    </div>
+                </div>
+
+                <!-- Value Cards -->
+                <div class="bento-card value-card" tabindex="0">
+                    <div class="card-icon">🎯</div>
+                    <div class="card-title">社会刚需</div>
+                    <p class="card-desc">服务留守儿童902万、失亲人群、创业者的情感陪伴需求</p>
+                </div>
+
+                <div class="bento-card value-card" tabindex="0">
+                    <div class="card-icon">🚀</div>
+                    <div class="card-title">技术创新</div>
+                    <p class="card-desc">多模态融合创造"有温度的科技产品"</p>
+                </div>
+
+                <div class="bento-card value-card" tabindex="0">
+                    <div class="card-icon">💰</div>
+                    <div class="card-title">市场潜力</div>
+                    <p class="card-desc">三大细分市场总规模超80亿</p>
+                </div>
+
+                <div class="bento-card value-card" tabindex="0">
+                    <div class="card-icon">🎨</div>
+                    <div class="card-title">差异化竞争</div>
+                    <p class="card-desc">实体形象 + 个性化记忆 + 主动交互</p>
+                </div>
+
+                <!-- Pain Points -->
+                <div class="bento-card span-2x1 pain-card" tabindex="0">
+                    <div class="card-icon">⚠️</div>
+                    <div class="card-title">伦理敏感性</div>
+                    <p class="card-desc">涉及儿童保护与死亡话题，极易引发社会争议，需建立严格的伦理审核机制</p>
+                </div>
+
+                <div class="bento-card span-2x1 pain-card" tabindex="0">
+                    <div class="card-icon">⚡</div>
+                    <div class="card-title">技术挑战</div>
+                    <p class="card-desc">延时问题（2-5秒）、语音克隆质量、多领域技术整合难度高</p>
+                </div>
+
+                <div class="bento-card span-2x1 pain-card" tabindex="0">
+                    <div class="card-icon">🧠</div>
+                    <div class="card-title">用户心理障碍</div>
+                    <p class="card-desc">突兀感、认知混淆、对"欺骗"的担忧影响产品接受度</p>
+                </div>
+
+                <div class="bento-card span-2x1 pain-card" tabindex="0">
+                    <div class="card-icon">🔄</div>
+                    <div class="card-title">依赖成瘾风险</div>
+                    <p class="card-desc">儿童可能拒绝真实社交，过度沉溺虚拟陪伴</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Risk Matrix - Heat Map -->
+        <section class="reveal">
+            <div class="risk-matrix">
+                <h2 class="section-title">核心风险矩阵</h2>
+                <div class="risk-grid">
+                    <div class="risk-item risk-critical">
+                        <div class="risk-header">
+                            <span class="risk-type">伦理风险</span>
+                            <span class="risk-level risk-level-critical">极高</span>
+                        </div>
+                        <div class="risk-details">
+                            <strong>具体表现：</strong>认知混淆、延缓悲伤、依赖成瘾
+                        </div>
+                        <div class="risk-strategy">
+                            <strong>应对策略：</strong>伦理委员会、使用时长限制、心理咨询接入
+                        </div>
+                    </div>
+
+                    <div class="risk-item risk-high">
+                        <div class="risk-header">
+                            <span class="risk-type">隐私安全</span>
+                            <span class="risk-level risk-level-high">高</span>
+                        </div>
+                        <div class="risk-details">
+                            <strong>具体表现：</strong>数据泄露、不当内容生成
+                        </div>
+                        <div class="risk-strategy">
+                            <strong>应对策略：</strong>本地运算、端到端加密、内容审核
+                        </div>
+                    </div>
+
+                    <div class="risk-item risk-medium">
+                        <div class="risk-header">
+                            <span class="risk-type">市场竞争</span>
+                            <span class="risk-level risk-level-medium">中</span>
+                        </div>
+                        <div class="risk-details">
+                            <strong>具体表现：</strong>接受度不确定、大厂进入
+                        </div>
+                        <div class="risk-strategy">
+                            <strong>应对策略：</strong>深耕细分市场、建立情感壁垒
+                        </div>
+                    </div>
+
+                    <div class="risk-item risk-high">
+                        <div class="risk-header">
+                            <span class="risk-type">舆论风险</span>
+                            <span class="risk-level risk-level-high">高</span>
+                        </div>
+                        <div class="risk-details">
+                            <strong>具体表现：</strong>被指责商业化利用悲伤
+                        </div>
+                        <div class="risk-strategy">
+                            <strong>应对策略：</strong>透明沟通、公益模式、社会责任
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Timeline -->
+        <section class="reveal">
+            <div class="timeline-container">
+                <h2 class="section-title">技术实现路径</h2>
+                <div class="timeline">
+                    <div class="timeline-phase">
+                        <div class="timeline-marker" aria-label="3个月">3个月</div>
+                        <div class="timeline-content">
+                            <h3 class="timeline-title">第一阶段：MVP验证</h3>
+                            <p class="timeline-desc">完成1-2个名人形象的AI茶宠原型，验证技术可行性，小范围用户测试（N=50）</p>
+                        </div>
+                    </div>
+
+                    <div class="timeline-phase">
+                        <div class="timeline-marker" aria-label="6个月">6个月</div>
+                        <div class="timeline-content">
+                            <h3 class="timeline-title">第二阶段：产品化</h3>
+                            <p class="timeline-desc">留守儿童人偶量产，完善伦理审核与安全防护，建立供应链与销售渠道</p>
+                        </div>
+                    </div>
+
+                    <div class="timeline-phase">
+                        <div class="timeline-marker" aria-label="12个月">12个月</div>
+                        <div class="timeline-content">
+                            <h3 class="timeline-title">第三阶段：规模化</h3>
+                            <p class="timeline-desc">拓展更多名人形象与场景，开发APP生态与内容社区，探索B端企业定制市场</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Revenue Projection -->
+        <section class="reveal">
+            <div class="risk-matrix">
+                <h2 class="section-title">预期收益</h2>
+                <div class="revenue-grid">
+                    <div class="revenue-card" tabindex="0">
+                        <div class="revenue-period">短期 · 6个月</div>
+                        <div class="revenue-amount">¥100-300万</div>
+                        <p class="revenue-label">MVP开发与首批用户验证</p>
+                    </div>
+
+                    <div class="revenue-card" tabindex="0">
+                        <div class="revenue-period">中期 · 12个月</div>
+                        <div class="revenue-amount">¥1000-3000万</div>
+                        <p class="revenue-label">三款产品商业化，积累10万+付费用户</p>
+                    </div>
+
+                    <div class="revenue-card" tabindex="0">
+                        <div class="revenue-period">长期 · 24个月</div>
+                        <div class="revenue-amount">¥5000万+</div>
+                        <p class="revenue-label">成为AI情感陪伴领域头部品牌</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script>
+        // Scroll Reveal Animation
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.reveal').forEach(el => {
+            observer.observe(el);
+        });
+
+        // Add keyboard navigation support
+        document.querySelectorAll('.bento-card, .revenue-card').forEach(card => {
+            card.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    card.click();
+                }
+            });
+        });
+    </script>
+</body>
+</html>

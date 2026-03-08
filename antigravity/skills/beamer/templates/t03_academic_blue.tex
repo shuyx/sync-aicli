@@ -1,0 +1,352 @@
+%!TEX program = xelatex
+% ============================================================
+% T03 - Academic Blue (Dark/Light Dual Mode)
+% 风格：深蓝学术风，支持明暗帧切换
+% 特色：darkframes 环境、章节目录、代码/公式/参考文献
+% 适合：学术报告、技术演讲、学位答辩
+% 原型：Fibeamer (Masaryk Univ.)，去品牌改造
+% 验证：Overleaf XeLaTeX ✅ (2026-03-05)
+%
+% 特色功能：
+%   \begin{darkframes}...\end{darkframes}  - 深色帧区块
+%   \AtBeginSection 自动生成章节目录
+%   \againframe{label} 重用已标记帧
+% ============================================================
+
+\documentclass[aspectratio=169, 10pt]{beamer}
+
+% ---------- 中文支持 ----------
+\usepackage[UTF8]{ctex}
+\usepackage{fontspec}
+\setmonofont{Courier New}
+
+% ---------- 排版宏包 ----------
+\usepackage{ragged2e}       % \justifying
+\usepackage{booktabs}
+\usepackage{tabularx}
+\usepackage{tikz}
+\usetikzlibrary{calc, shapes, backgrounds}
+\usepackage{amsmath, amssymb, dsfont}
+\usepackage{url}
+\usepackage{listings}
+\usepackage{xcolor}
+
+% ---------- 配色：Academic Blue ----------
+\definecolor{navyPrimary}{HTML}{003865}    % 深海蓝（主色）
+\definecolor{royalBlue}{HTML}{1B4F8A}      % 皇家蓝（次色）
+\definecolor{skyAccent}{HTML}{5B9BD5}      % 天蓝（强调）
+\definecolor{lightBg}{HTML}{F5F8FC}        % 浅蓝白
+\definecolor{darkBg}{HTML}{1A2E44}         % 暗帧背景
+\definecolor{darkBg2}{HTML}{0D1B2A}        % 暗帧深背景
+\definecolor{alertRed}{HTML}{C0392B}
+\definecolor{exampleGreen}{HTML}{1A7A4A}
+\definecolor{mutedGray}{HTML}{6B7280}
+
+% ---------- 主题基础设置 ----------
+\usetheme{default}
+\usecolortheme{default}
+
+% 亮色模式颜色
+\newcommand{\setLightMode}{
+  \setbeamercolor{background canvas}{bg=lightBg}
+  \setbeamercolor{normal text}{fg=navyPrimary, bg=lightBg}
+  \setbeamercolor{frametitle}{bg=navyPrimary, fg=white}
+  \setbeamercolor{block title}{bg=royalBlue, fg=white}
+  \setbeamercolor{block body}{bg=white, fg=navyPrimary}
+  \setbeamercolor{block title alerted}{bg=alertRed, fg=white}
+  \setbeamercolor{block body alerted}{bg=white, fg=navyPrimary}
+  \setbeamercolor{block title example}{bg=exampleGreen, fg=white}
+  \setbeamercolor{block body example}{bg=white, fg=navyPrimary}
+  \setbeamercolor{item}{fg=royalBlue}
+  \setbeamercolor{subitem}{fg=skyAccent}
+  \setbeamercolor{alerted text}{fg=alertRed}
+  \setbeamercolor{footline}{bg=navyPrimary, fg=white}
+}
+
+% 暗色模式颜色
+\newcommand{\setDarkMode}{
+  \setbeamercolor{background canvas}{bg=darkBg}
+  \setbeamercolor{normal text}{fg=white, bg=darkBg}
+  \setbeamercolor{frametitle}{bg=darkBg2, fg=skyAccent}
+  \setbeamercolor{block title}{bg=royalBlue, fg=white}
+  \setbeamercolor{block body}{bg=darkBg2, fg=white!90}
+  \setbeamercolor{block title alerted}{bg=alertRed, fg=white}
+  \setbeamercolor{block body alerted}{bg=darkBg2, fg=white!90}
+  \setbeamercolor{block title example}{bg=exampleGreen, fg=white}
+  \setbeamercolor{block body example}{bg=darkBg2, fg=white!90}
+  \setbeamercolor{item}{fg=skyAccent}
+  \setbeamercolor{subitem}{fg=skyAccent!70}
+  \setbeamercolor{alerted text}{fg=skyAccent}
+  \setbeamercolor{footline}{bg=darkBg2, fg=white!70}
+}
+
+% 初始化为亮色
+\setLightMode
+
+% ---------- 暗帧环境 ----------
+\newenvironment{darkframes}{
+  \setDarkMode
+  \setbeamertemplate{frametitle}{
+    \vspace{0.4em}
+    {\color{skyAccent}\rule{0.06\textwidth}{0.8pt}}
+    \hspace{0.3em}\textbf{\large \insertframetitle}
+    \par\vspace{0.1em}
+  }
+}{
+  \setLightMode
+  \setbeamertemplate{frametitle}{
+    \vspace{0.3em}
+    \textbf{\large \insertframetitle}\\[-0.15em]
+    {\color{skyAccent}\rule{\textwidth}{0.6pt}}
+    \vspace{0.1em}
+  }
+}
+
+% ---------- 帧标题模板（亮色） ----------
+\setbeamertemplate{frametitle}{
+  \vspace{0.3em}
+  \textbf{\large \insertframetitle}\\[-0.15em]
+  {\color{skyAccent}\rule{\textwidth}{0.6pt}}
+  \vspace{0.1em}
+}
+
+% ---------- 页脚 ----------
+\setbeamertemplate{footline}{
+  \begin{beamercolorbox}[wd=\paperwidth, ht=0.5cm, dp=0.2cm]{footline}
+    \begin{tikzpicture}[overlay, remember picture]
+      \fill[navyPrimary] (0,0) rectangle (\paperwidth, 0.7cm);
+      \fill[skyAccent] (0, 0.65cm) rectangle (\paperwidth, 0.7cm);
+      \node[anchor=west, text=white!80, font=\tiny] at (0.3cm, 0.35cm)
+        {\insertshortauthor \ | \ \insertshorttitle};
+      \node[anchor=east, text=white!80, font=\tiny] at (\paperwidth-0.3cm, 0.35cm)
+        {\insertframenumber\,/\,\inserttotalframenumber};
+    \end{tikzpicture}
+  \end{beamercolorbox}
+}
+
+\setbeamertemplate{navigation symbols}{}
+\setbeamertemplate{headline}{}
+
+% ---------- 代码样式 ----------
+\lstset{
+  language=C,
+  basicstyle=\ttfamily\small,
+  keywordstyle=\color{royalBlue}\bfseries,
+  commentstyle=\color{mutedGray}\itshape,
+  stringstyle=\color{exampleGreen},
+  numbers=left,
+  numberstyle=\tiny\color{mutedGray},
+  frame=single,
+  rulecolor=\color{skyAccent},
+  backgroundcolor=\color{lightBg},
+  breaklines=true,
+  tabsize=2,
+}
+
+% ---------- 章节目录自动插入 ----------
+\AtBeginSection[]{
+  \begin{frame}<beamer>
+    \frametitle{第 \thesection\ 章 · 内容概要}
+    \tableofcontents[currentsection, hideothersubsections]
+  \end{frame}
+}
+
+% ============================================================
+% 元信息
+% ============================================================
+\title[简短标题]{完整演讲标题}
+\subtitle{副标题}
+\author[作者简称]{演讲者姓名 \\ 职务 / 研究方向}
+\date{\today}
+
+% ============================================================
+\begin{document}
+% ============================================================
+
+% ---- 封面 ----
+\begin{frame}[c, noframenumbering]
+  \begin{tikzpicture}[remember picture, overlay]
+    \fill[navyPrimary] (current page.south west) rectangle (current page.north east);
+    \fill[skyAccent] (current page.north west)
+      rectangle ([yshift=-0.5cm]current page.north east);
+    \fill[darkBg2] (current page.south west)
+      rectangle ([yshift=1.0cm]current page.south east);
+
+    \node[anchor=west, text=white, font=\bfseries\Large,
+          text width=0.8\paperwidth, align=left]
+      at ([xshift=0.8cm, yshift=1.2cm]current page.west)
+      {\inserttitle};
+
+    \node[anchor=west, text=skyAccent, font=\normalsize,
+          text width=0.8\paperwidth, align=left]
+      at ([xshift=0.8cm, yshift=0.3cm]current page.west)
+      {\insertsubtitle};
+
+    \node[anchor=west, text=white!80, font=\small, align=left]
+      at ([xshift=0.8cm, yshift=-0.6cm]current page.west)
+      {\insertauthor};
+
+    \node[anchor=east, text=white!50, font=\footnotesize]
+      at ([xshift=-0.5cm, yshift=0.5cm]current page.south east)
+      {\insertdate};
+  \end{tikzpicture}
+\end{frame}
+
+% ============================================================
+\section{亮色帧示例}
+% ============================================================
+
+\begin{frame}[label=lists]{列表与多栏}
+  \begin{columns}[onlytextwidth]
+    \column{.5\textwidth}
+      \begin{itemize}
+        \item 一级要点
+        \begin{itemize}
+          \item 二级要点
+          \begin{itemize}
+            \item 三级要点
+          \end{itemize}
+        \end{itemize}
+      \end{itemize}
+    \column{.5\textwidth}
+      \begin{enumerate}
+        \item 编号列表
+        \begin{enumerate}
+          \item 子编号
+          \begin{enumerate}
+            \item 三级编号
+          \end{enumerate}
+        \end{enumerate}
+      \end{enumerate}
+  \end{columns}
+  \bigskip
+  \justifying
+  正文内容支持两端对齐排版，适合较长段落描述。
+  The quick brown fox jumps over a lazy dog.
+\end{frame}
+
+\begin{frame}[label=blocks]{文本块}
+  \framesubtitle{普通 · 示例 · 警告 三种风格}
+
+  \alert{高亮文字}可直接用 \texttt{\textbackslash alert} 标记。
+
+  \begin{block}{普通块}
+    这是普通块，包含 \alert{高亮文字}。
+  \end{block}
+  \begin{exampleblock}{示例块}
+    这是示例块，包含 \alert{高亮文字}。
+  \end{exampleblock}
+  \begin{alertblock}{警告块}
+    这是警告块，包含 \alert{高亮文字}。
+  \end{alertblock}
+\end{frame}
+
+\begin{frame}[label=math]{数学公式}
+  \framesubtitle{行间公式、矩阵、积分}
+  \begin{columns}[onlytextwidth]
+    \column{.5\textwidth}
+      $$\frac{1}{\displaystyle 1+
+        \frac{1}{\displaystyle 2+
+        \frac{1}{\displaystyle 3+x}}}$$
+    \column{.5\textwidth}
+      $$F:\left| \begin{array}{ccc}
+      F''_{xx} & F''_{xy} &  F'_x \\
+      F''_{yx} & F''_{yy} &  F'_y \\
+      F'_x     & F'_y     & 0
+      \end{array}\right| = 0$$
+  \end{columns}
+  \begin{columns}[onlytextwidth]
+    \column{.5\textwidth}
+      \begin{eqnarray*}
+        e^x &\approx& 1+x+x^2/2! + \\
+            && {}+x^3/3! + x^4/4!
+      \end{eqnarray*}
+    \column{.5\textwidth}
+      $${n+1\choose k} = {n\choose k} + {n \choose k-1}$$
+  \end{columns}
+\end{frame}
+
+\begin{frame}[label=table]{数据表格}
+  \begin{tabularx}{\textwidth}{Xrrr}
+    \textbf{类别} & \textbf{数值A} & \textbf{数值B} & \textbf{占比} \\
+    \toprule
+    类别一 & 1\,716  & 2\,904  & 59.1\% \\
+    类别二 & 786     & 5\,275  & 14.9\% \\
+    类别三 & 64      & 4\,591  &  1.4\% \\
+    类别四 & 69      & 10\,000 &  0.7\% \\
+    类别五 & 8       & 2\,014  &  0.4\% \\
+    \bottomrule
+  \end{tabularx}
+\end{frame}
+
+\defverbatim[colored]\codeExample{
+  \begin{lstlisting}[language=C, tabsize=2]
+#include <stdio.h>
+
+// 示例函数
+int main(int argc, char **argv)
+{
+    printf("Hello, World!\n");
+    return 0;
+}
+  \end{lstlisting}
+}
+\begin{frame}[label=code]{代码示例}
+  \codeExample
+\end{frame}
+
+\begin{frame}[label=bib]{参考文献}
+  \begin{thebibliography}{9}
+    \bibitem{ref1}
+        作者甲.
+        \emph{书名}.
+        出版社, 2023.
+    \bibitem{ref2}
+        作者乙, 作者丙.
+        \emph{论文题目}.
+        期刊名, Vol. 1, pp. 1--10, 2024.
+    \bibitem{ref3}
+        作者丁.
+        \emph{会议论文}.
+        Available at \url{https://example.com}.
+  \end{thebibliography}
+\end{frame}
+
+% ============================================================
+\section{暗色帧示例}
+% ============================================================
+
+\begin{darkframes}
+
+  \begin{frame}{暗色列表}
+    \begin{itemize}
+      \item 暗色帧中的列表
+      \begin{itemize}
+        \item 强调色自动切换为天蓝色
+      \end{itemize}
+    \end{itemize}
+    \begin{block}{普通块（暗色模式）}
+      暗色背景下的块内容。
+    \end{block}
+  \end{frame}
+
+  \againframe{math}
+  \againframe{code}
+
+\end{darkframes}
+
+% ---- 结束页 ----
+\begin{frame}[c, noframenumbering]
+  \begin{tikzpicture}[remember picture, overlay]
+    \fill[navyPrimary] (current page.south west) rectangle (current page.north east);
+    \fill[skyAccent] (current page.north west)
+      rectangle ([yshift=-0.5cm]current page.north east);
+    \node[text=white, font=\bfseries\Large] at (current page.center)
+      {感谢聆听};
+    \node[text=skyAccent, font=\normalsize]
+      at ([yshift=-0.8cm]current page.center)
+      {\insertauthor};
+  \end{tikzpicture}
+\end{frame}
+
+\end{document}

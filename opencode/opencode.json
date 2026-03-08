@@ -1,0 +1,219 @@
+{
+    "$schema": "https://opencode.ai/config.json",
+    "mcp": {
+        "ai4scholar": {
+            "enabled": true,
+            "headers": {
+                "Authorization": "Bearer {{AI4SCHOLAR_KEY}}"
+            },
+            "type": "remote",
+            "url": "https://mcp.ai4scholar.net/sse"
+        },
+        "arxiv": {
+            "command": [
+                "npx",
+                "-y",
+                "arxiv-mcp-server"
+            ],
+            "enabled": true,
+            "type": "local"
+        },
+        "context7": {
+            "command": [
+                "npx",
+                "-y",
+                "@upstash/context7-mcp"
+            ],
+            "enabled": true,
+            "type": "local"
+        },
+        "exa": {
+            "command": [
+                "npx",
+                "-y",
+                "exa-mcp-server"
+            ],
+            "enabled": true,
+            "environment": {
+                "EXA_API_KEY": "{{EXA_KEY}}"
+            },
+            "type": "local"
+        },
+        "filesystem": {
+            "command": [
+                "npx",
+                "-y",
+                "@modelcontextprotocol/server-filesystem",
+                "OBSIDIAN_PATH"
+            ],
+            "enabled": true,
+            "type": "local"
+        },
+        "git": {
+            "command": [
+                "uvx",
+                "mcp-server-git"
+            ],
+            "enabled": true,
+            "type": "local"
+        },
+        "github": {
+            "command": [
+                "npx",
+                "-y",
+                "@modelcontextprotocol/server-github"
+            ],
+            "enabled": true,
+            "environment": {
+                "GITHUB_TOKEN": "{{GITHUB_PAT}}"
+            },
+            "type": "local"
+        },
+        "memory": {
+            "command": [
+                "npx",
+                "-y",
+                "@modelcontextprotocol/server-memory"
+            ],
+            "enabled": true,
+            "type": "local"
+        },
+        "playwright": {
+            "command": [
+                "npx",
+                "@playwright/mcp@latest"
+            ],
+            "enabled": true,
+            "type": "local"
+        },
+        "qmd": {
+            "command": [
+                "HOME_PATH/.bun/bin/qmd",
+                "mcp"
+            ],
+            "enabled": true,
+            "type": "local"
+        },
+        "ripgrep": {
+            "command": [
+                "npx",
+                "-y",
+                "mcp-ripgrep@latest"
+            ],
+            "enabled": true,
+            "type": "local"
+        },
+        "sequential-thinking": {
+            "command": [
+                "npx",
+                "-y",
+                "@modelcontextprotocol/server-sequential-thinking"
+            ],
+            "enabled": true,
+            "type": "local"
+        },
+        "time": {
+            "command": [
+                "npx",
+                "-y",
+                "@modelcontextprotocol/server-time"
+            ],
+            "enabled": true,
+            "type": "local"
+        },
+        "web-reader": {
+            "headers": {
+                "Authorization": "Bearer {{ZHIPU_KEY}}"
+            },
+            "type": "remote",
+            "url": "https://open.bigmodel.cn/api/mcp/web_reader/mcp"
+        },
+        "web-search-prime": {
+            "headers": {
+                "Authorization": "Bearer {{ZHIPU_KEY}}"
+            },
+            "type": "remote",
+            "url": "https://open.bigmodel.cn/api/mcp/web_search_prime/mcp"
+        },
+        "zai-mcp-server": {
+            "command": [
+                "npx",
+                "-y",
+                "@z_ai/mcp-server"
+            ],
+            "environment": {
+                "Z_AI_API_KEY": "{{ZHIPU_KEY}}",
+                "Z_AI_MODE": "ZHIPU"
+            },
+            "type": "local"
+        },
+        "zread": {
+            "headers": {
+                "Authorization": "Bearer {{ZHIPU_KEY}}"
+            },
+            "type": "remote",
+            "url": "https://open.bigmodel.cn/api/mcp/zread/mcp"
+        }
+    },
+    "model": "minimax-cn-coding-plan/MiniMax-M2.5",
+    "plugin": [
+        "opencode-scheduler",
+        "oh-my-opencode@latest"
+    ],
+    "provider": {
+        "openai": {
+            "options": {
+                "apiKey": "{{CRS_OAI_KEY}}",
+                "baseURL": "https://codex.funai.vip/openai"
+            }
+        },
+        "openai2": {
+            "options": {
+                "apiKey": "{{CRS_OAI_KEY}}",
+                "baseURL": "https://codex.funai.vip/openai"
+            }
+        },
+        "volcengine": {
+            "models": {
+                "ark-code-latest": {
+                    "name": "ark-code-latest"
+                },
+                "kimi-k2.5": {
+                    "modalities": {
+                        "input": [
+                            "text",
+                            "image"
+                        ],
+                        "output": [
+                            "text"
+                        ]
+                    },
+                    "name": "kimi-k2.5",
+                    "options": {
+                        "thinking": {
+                            "type": "enabled"
+                        }
+                    }
+                }
+            },
+            "name": "volcengine",
+            "npm": "@ai-sdk/openai-compatible",
+            "options": {
+                "apiKey": "{{VOLCENGINE_KEY}}",
+                "baseURL": "https://ark.cn-beijing.volces.com/api/coding/v3"
+            }
+        },
+        "yescode": {
+            "options": {
+                "apiKey": "{{YESCODE_KEY}}",
+                "baseURL": "https://co.yes.vg/v1"
+            }
+        },
+        "zhipuai-coding-plan": {
+            "options": {
+                "apiKey": "{{ZHIPU_KEY}}"
+            }
+        }
+    },
+    "small_model": "minimax-cn-coding-plan/MiniMax-M2.5-highspeed"
+}

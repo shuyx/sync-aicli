@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+html { background: #ffffff; }
+body {
+  width: 720pt; height: 405pt; margin: 0; padding: 0;
+  background: #F8FAFC; font-family: Arial, sans-serif;
+  display: flex; flex-direction: column;
+}
+.header {
+  background: #0F172A; padding: 20pt 40pt;
+  border-bottom: 4pt solid #0369A1;
+}
+.header h1 {
+  color: #ffffff; font-size: 28pt;
+  font-weight: bold; margin: 0;
+}
+.content {
+  flex: 1; padding: 30pt 40pt;
+  display: flex; gap: 25pt;
+}
+.revenue-card {
+  flex: 1; background: #ffffff;
+  border: 2pt solid #E2E8F0;
+  padding: 25pt; text-align: center;
+}
+.revenue-top {
+  height: 4pt; margin: -25pt -25pt 20pt;
+}
+.revenue-top-1 { background: #0369A1; }
+.revenue-top-2 { background: #F59E0B; }
+.revenue-top-3 { background: #16A34A; }
+.revenue-period {
+  font-size: 11pt; font-weight: bold;
+  color: #64748B; text-transform: uppercase;
+  letter-spacing: 1pt; margin-bottom: 15pt;
+}
+.revenue-amount {
+  font-size: 36pt; font-weight: bold;
+  color: #0F172A; margin-bottom: 15pt;
+  line-height: 1;
+}
+.revenue-label {
+  font-size: 12pt; color: #475569;
+  line-height: 1.5;
+}
+</style>
+</head>
+<body>
+<div class="header">
+  <h1>预期收益</h1>
+</div>
+<div class="content">
+  <div class="revenue-card">
+    <div class="revenue-top revenue-top-1"></div>
+    <p class="revenue-period">短期 · 6个月</p>
+    <p class="revenue-amount">¥100-300万</p>
+    <p class="revenue-label">MVP开发与首批用户验证</p>
+  </div>
+
+  <div class="revenue-card">
+    <div class="revenue-top revenue-top-2"></div>
+    <p class="revenue-period">中期 · 12个月</p>
+    <p class="revenue-amount">¥1000-3000万</p>
+    <p class="revenue-label">三款产品商业化，积累10万+付费用户</p>
+  </div>
+
+  <div class="revenue-card">
+    <div class="revenue-top revenue-top-3"></div>
+    <p class="revenue-period">长期 · 24个月</p>
+    <p class="revenue-amount">¥5000万+</p>
+    <p class="revenue-label">成为AI情感陪伴领域头部品牌</p>
+  </div>
+</div>
+</body>
+</html>

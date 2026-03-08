@@ -1,0 +1,174 @@
+%!TEX program = xelatex
+% ============================================================
+% T01 - Metropolis · Ocean Gradient
+% 风格：深蓝 + 青色，科技感，现代扁平
+% 适合：科技产品介绍、商务提案、项目汇报
+% 验证：Overleaf XeLaTeX ✅ (2026-03-05)
+% ============================================================
+
+\documentclass[aspectratio=169, 10pt]{beamer}
+
+\usetheme{metropolis}
+
+% ---------- 中文支持 ----------
+\usepackage[UTF8]{ctex}
+\usepackage{fontspec}
+
+% ---------- 常用宏包 ----------
+\usepackage{booktabs}
+\usepackage{tabularx}
+\usepackage{xcolor}
+\usepackage{array}
+
+\setmonofont{Courier New}
+
+% ---------- 配色：Ocean Gradient ----------
+\definecolor{navyBlue}{HTML}{1E2761}
+\definecolor{deepBlue}{HTML}{065A82}
+\definecolor{tealAccent}{HTML}{14B8A6}
+\definecolor{offWhite}{HTML}{F0F4F8}
+\definecolor{mutedText}{HTML}{64748B}
+\definecolor{goldText}{HTML}{F59E0B}
+
+\setbeamercolor{normal text}{fg=navyBlue, bg=offWhite}
+\setbeamercolor{alerted text}{fg=tealAccent}
+\setbeamercolor{example text}{fg=deepBlue}
+\setbeamercolor{frametitle}{bg=navyBlue, fg=white}
+\setbeamercolor{progress bar}{fg=tealAccent, bg=navyBlue!30}
+\setbeamercolor{title separator}{fg=tealAccent}
+\setbeamercolor{structure}{fg=navyBlue}
+\setbeamercolor{block title}{bg=navyBlue, fg=white}
+\setbeamercolor{block body}{bg=offWhite}
+\setbeamercolor{block title alerted}{bg=tealAccent, fg=white}
+\setbeamercolor{block title example}{bg=deepBlue, fg=white}
+
+\metroset{
+  progressbar       = frametitle,
+  sectionpage       = progressbar,
+  block             = fill,
+}
+
+% ---------- 页脚 ----------
+\setbeamertemplate{footline}{
+  \begin{beamercolorbox}[wd=\paperwidth, ht=2.5ex, dp=1ex]{frametitle}
+    \hfill
+    \color{white!70}\footnotesize
+    % ← 在此填写机构名
+    \quad|\quad
+    \insertframenumber\,/\,\inserttotalframenumber
+    \hspace{1em}
+  \end{beamercolorbox}
+}
+
+% ============================================================
+% 填写元信息
+% ============================================================
+\title{[演讲标题]}
+\subtitle{[副标题]}
+\author{[作者]}
+\institute{[机构]}
+\date{[日期]}
+
+% ============================================================
+\begin{document}
+% ============================================================
+
+% ---- 深色封面 ----
+{
+  \setbeamercolor{background canvas}{bg=navyBlue}
+  \begin{frame}
+    \titlepage
+    \vspace{-0.5em}
+    \begin{center}
+      \textcolor{tealAccent}{\small [封面副文字]}
+    \end{center}
+  \end{frame}
+}
+
+% ---- 目录（可选，短演讲可删） ----
+\begin{frame}{目录}
+  \setbeamertemplate{section in toc}[sections numbered]
+  \tableofcontents[hideallsubsections]
+\end{frame}
+
+% ============================================================
+\section{[第一节]}
+% ============================================================
+
+% --- 三栏卡片布局 ---
+\begin{frame}{[标题]}
+  \begin{columns}[T]
+    \begin{column}{0.31\textwidth}
+      \begin{block}{[卡片1标题]}
+        \small [内容]
+      \end{block}
+    \end{column}
+    \begin{column}{0.31\textwidth}
+      \begin{alertblock}{[卡片2标题]}
+        \small [内容]
+      \end{alertblock}
+    \end{column}
+    \begin{column}{0.31\textwidth}
+      \begin{exampleblock}{[卡片3标题]}
+        \small [内容]
+      \end{exampleblock}
+    \end{column}
+  \end{columns}
+\end{frame}
+
+% --- 表格布局 ---
+\begin{frame}{[标题]}
+  \begin{tabularx}{\textwidth}{lX}
+    \toprule
+    \textbf{列A} & \textbf{列B} \\
+    \midrule
+    行1 & 内容 \\
+    行2 & 内容 \\
+    \bottomrule
+  \end{tabularx}
+\end{frame}
+
+% --- 两栏布局 ---
+\begin{frame}{[标题]}
+  \begin{columns}[c]
+    \begin{column}{0.45\textwidth}
+      [左侧内容]
+    \end{column}
+    \begin{column}{0.50\textwidth}
+      [右侧内容]
+    \end{column}
+  \end{columns}
+\end{frame}
+
+% --- 层叠块（架构/流程）---
+\begin{frame}{[标题]}
+  \begin{block}{[顶层]}\small [内容]\end{block}
+  \vspace{0.3em}
+  \begin{alertblock}{[中层]}\small [内容]\end{alertblock}
+  \vspace{0.3em}
+  \begin{exampleblock}{[底层]}\small [内容]\end{exampleblock}
+\end{frame}
+
+% ============================================================
+\section{[第二节]}
+% ============================================================
+
+\begin{frame}{[标题]}
+  \begin{itemize}
+    \item [要点1]
+    \item [要点2]
+    \item [要点3]
+  \end{itemize}
+\end{frame}
+
+% ---- 深色结束页 ----
+{
+  \setbeamercolor{background canvas}{bg=navyBlue}
+  \begin{frame}[standout]
+    \textcolor{tealAccent}{\Large 谢谢}\\[0.5em]
+    \textcolor{white}{\small [机构名]}\\
+    \textcolor{white!60}{\footnotesize [日期]}
+  \end{frame}
+}
+
+\end{document}

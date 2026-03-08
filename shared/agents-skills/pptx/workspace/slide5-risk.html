@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+html { background: #ffffff; }
+body {
+  width: 720pt; height: 405pt; margin: 0; padding: 0;
+  background: #F8FAFC; font-family: Arial, sans-serif;
+  display: flex; flex-direction: column;
+}
+.header {
+  background: #0F172A; padding: 20pt 40pt;
+  border-bottom: 4pt solid #0369A1;
+}
+.header h1 {
+  color: #ffffff; font-size: 28pt;
+  font-weight: bold; margin: 0;
+}
+.content {
+  flex: 1; padding: 25pt 40pt;
+  overflow: hidden;
+}
+.table-container {
+  background: #ffffff; border: 2pt solid #E2E8F0;
+}
+table {
+  width: 100%; border-collapse: collapse;
+}
+thead {
+  background: #0F172A; color: #ffffff;
+}
+th {
+  padding: 12pt; text-align: left;
+  font-weight: bold; font-size: 12pt;
+  border-bottom: 3pt solid #0369A1;
+}
+td {
+  padding: 12pt; font-size: 11pt;
+  border-bottom: 1pt solid #E2E8F0;
+  vertical-align: top;
+}
+td:first-child {
+  font-weight: bold; color: #0F172A;
+}
+.badge-box {
+  display: inline-block;
+  padding: 4pt 10pt;
+}
+.badge-critical {
+  background: #DC2626;
+}
+.badge-high {
+  background: #EA580C;
+}
+.badge-medium {
+  background: #F59E0B;
+}
+.badge-text {
+  color: #ffffff; font-weight: bold;
+  font-size: 10pt; text-transform: uppercase;
+}
+</style>
+</head>
+<body>
+<div class="header">
+  <h1>核心风险矩阵</h1>
+</div>
+<div class="content">
+  <div class="table-container">
+    <table>
+      <thead>
+        <tr>
+          <th>风险类型</th>
+          <th>危害程度</th>
+          <th>具体表现</th>
+          <th>应对策略</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>伦理风险</td>
+          <td><span class="badge-box badge-critical"><span class="badge-text">极高</span></span></td>
+          <td>认知混淆、延缓悲伤、依赖成瘾</td>
+          <td>伦理委员会、使用时长限制、心理咨询接入</td>
+        </tr>
+        <tr>
+          <td>隐私安全</td>
+          <td><span class="badge-box badge-high"><span class="badge-text">高</span></span></td>
+          <td>数据泄露、不当内容生成</td>
+          <td>本地运算、端到端加密、内容审核</td>
+        </tr>
+        <tr>
+          <td>市场竞争</td>
+          <td><span class="badge-box badge-medium"><span class="badge-text">中</span></span></td>
+          <td>接受度不确定、大厂进入</td>
+          <td>深耕细分市场、建立情感壁垒</td>
+        </tr>
+        <tr>
+          <td>舆论风险</td>
+          <td><span class="badge-box badge-high"><span class="badge-text">高</span></span></td>
+          <td>被指责商业化利用悲伤</td>
+          <td>透明沟通、公益模式、社会责任</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+</body>
+</html>

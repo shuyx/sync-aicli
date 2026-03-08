@@ -1,0 +1,201 @@
+╔══════════════════════════════════════════════════════════════════════╗
+║         Markdown 到 PDF 转换 Skill - 快速参考手册                     ║
+╚══════════════════════════════════════════════════════════════════════╝
+
+📍 Skill 文件位置
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+完整文档:      ~/.claude/skills/markdown-to-pdf-skill.md
+快速脚本:      ~/.claude/skills/md-to-pdf-quickstart.sh
+此参考指南:    ~/.claude/skills/MD-TO-PDF-QUICK-REFERENCE.txt
+
+
+⚡ 30 秒快速开始
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+1️⃣  检查 Chrome 安装:
+    macOS:   /Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome --version
+    Linux:   google-chrome --version
+    Windows: "C:\Program Files\Google\Chrome\Application\chrome.exe" --version
+
+2️⃣  安装依赖:
+    pip install markdown
+
+3️⃣  运行转换:
+    方法 A (自动脚本):
+    $ bash ~/.claude/skills/md-to-pdf-quickstart.sh input.md output.pdf
+
+    方法 B (Python 脚本):
+    $ python3 md_to_pdf.py input.md output.pdf
+
+
+🎯 核心用法
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+【最简单】一键生成 PDF:
+$ bash md-to-pdf-quickstart.sh report.md
+
+【指定输出名】:
+$ bash md-to-pdf-quickstart.sh report.md output_report.pdf
+
+【Python 方法】:
+$ python3 md_to_pdf.py report.md
+
+
+⚙️  系统要求
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+✅ Chrome/Chromium 浏览器（任何版本）
+✅ Python 3.7+
+✅ markdown 库（pip install markdown）
+✅ 2 GB 可用磁盘空间
+
+
+✨ 主要特性
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+✓ 支持中文（完美）
+✓ 支持 Markdown 表格
+✓ 支持代码高亮
+✓ 支持链接和图片
+✓ 自动分页处理
+✓ A4 纸张格式
+✓ 专业排版样式
+✓ 跨平台（Mac/Linux/Windows）
+
+
+❌ 常见问题 & 解决方案
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Q1: "Chrome 未找到"
+A1: 安装 Chrome
+    macOS: brew install --cask google-chrome
+    Linux: sudo apt-get install google-chrome-stable
+
+Q2: 中文显示乱码
+A2: 确保文件使用 UTF-8 编码，HTML 包含:
+    <meta charset="UTF-8">
+
+Q3: 表格被分割到多页
+A3: CSS 已包含 page-break-inside: avoid，如仍有问题，
+    尝试增加 margin 或减少表格宽度
+
+Q4: PDF 生成太慢
+A4: 是正常的（通常 5-30 秒），大文件需要更长时间
+
+Q5: markdown 库未安装
+A5: pip install markdown
+
+
+📋 支持的 Markdown 语法
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+标题:          # H1, ## H2, ### H3, #### H4
+粗体/斜体:     **粗体**, *斜体*
+代码:          `inline` 或 ```python\ncode\n```
+列表:          - 项1  或  1. 项1
+表格:          | Col1 | Col2 |\n|------|------|\n| A | B |
+链接:          [文本](url)
+图片:          ![alt](path)
+引用:          > 引用文本
+分割线:        ---
+
+
+🎨 样式自定义
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+修改颜色主题（在脚本中查找 CSS 部分）:
+
+# 蓝色专业（默认）
+h1 { color: #1f3a70; border-bottom: 3px solid #ff7f50; }
+
+# 绿色科技
+h1 { color: #2d5016; border-bottom: 3px solid #4caf50; }
+
+# 修改后重新运行脚本即可应用新样式
+
+
+📊 输出文件大小估算
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+10 页纯文本:    0.5 - 1 MB
+30 页有表格:    2 - 3 MB
+100 页复杂文档: 5 - 10 MB
+含图片文档:     取决于图片大小和质量
+
+
+⏱️  处理时间估算
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Markdown → HTML:  < 1 秒
+HTML → PDF:       3-30 秒（取决于页数和复杂性）
+总时间:           5-40 秒
+
+
+🔧 高级用法
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+批量转换多个文件:
+for file in *.md; do
+    bash md-to-pdf-quickstart.sh "$file"
+done
+
+自定义 Chrome 路径:
+CHROME_PATH="/path/to/chrome" bash md-to-pdf-quickstart.sh input.md
+
+自定义 PDF 页边距（在 CSS 中修改）:
+@page { margin: 25mm; }
+
+
+📖 相关资源
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Markdown 完整语法: https://www.markdownguide.org/
+Chrome 命令行参数: https://chromedriver.chromium.org/
+Python markdown 库: https://python-markdown.github.io/
+
+
+✅ 工作流建议
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+1. 用你喜欢的编辑器编写 Markdown（VSCode, Obsidian 等）
+2. 定期保存 .md 文件
+3. 需要 PDF 时运行: bash md-to-pdf-quickstart.sh report.md
+4. 在浏览器中预览 HTML（如需调整样式）
+5. PDF 生成完毕，可直接分享或打印
+
+
+💡 性能优化建议
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+• 避免在 Markdown 中嵌入大量高分辨率图片
+• 使用清晰的标题结构（自动生成目录）
+• 定期将大文档拆分成多个文件
+• 对于 >100 页的文档，考虑并行处理
+
+
+🎓 学习路径
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+初学者:    阅读此文件 + 运行快速脚本
+进阶:      阅读完整 Skill 文档，修改 CSS 样式
+专家:      修改 Python 脚本，集成自动化流程
+
+
+📞 支持与反馈
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+遇到问题？
+1. 查阅完整文档的"故障排除"章节
+2. 检查 Chrome 和 Python 是否正确安装
+3. 验证 Markdown 文件编码为 UTF-8
+
+
+════════════════════════════════════════════════════════════════════════
+
+最后更新: 2026-02-02
+版本: 1.0
+作者: Claude Code Skill Team
+许可证: MIT（自由使用）
+
+════════════════════════════════════════════════════════════════════════

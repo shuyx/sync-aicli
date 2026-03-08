@@ -1,0 +1,413 @@
+%!TEX program = xelatex
+% ============================================================
+% R02 - Ocean Report（通用版本，无外部依赖，XeLaTeX）
+% 风格：与 T01 Metropolis Ocean Gradient 同配色
+% 封面：仿 IPLeiria classic 风格
+% Tips：仿 IPLeiria block 样式（极浅底色 + 左侧色条）
+% 编译器：XeLaTeX（Overleaf: Menu → Compiler → XeLaTeX）
+% 适合：技术报告、项目文档、调研报告、学术论文
+%
+% Markdown → LaTeX 对照：
+%   # 标题      → \section{}        （深蓝粗体 + 2pt 下划线）
+%   ## 二级     → \subsection{}     （13pt + 1.1 编号 + 灰色细线）
+%   ### 三级    → \subsubsection{}  （12pt + 1.1.1 编号）
+%   **粗体**    → \textbf{}
+%   `代码`      → \code{}
+%   ==高亮==    → \hl{} / \hls{}
+%   > 引用      → \begin{quoteblock}
+%   💡 提示     → \begin{tipbox}
+%   ℹ 说明      → \begin{notebox}
+%   ⚠ 注意      → \begin{alertbox}
+%   | 表格 |    → tabularx
+%   - 列表      → \begin{itemize}
+%   1. 有序     → \begin{enumerate}
+% ============================================================
+
+\documentclass[11pt, a4paper]{article}
+
+% ---------- 中文 ----------
+\usepackage[UTF8]{ctex}
+\usepackage{fontspec}
+\setmonofont{Courier New}
+
+% ---------- 页面 ----------
+\usepackage[top=2.5cm, bottom=2.5cm, left=2.8cm, right=2.8cm, headheight=14pt]{geometry}
+
+% ---------- 宏包 ----------
+\usepackage{xcolor, booktabs, tabularx, array}
+\usepackage{amsmath, amssymb, graphicx, listings}
+\usepackage{hyperref, fancyhdr, titlesec}
+\usepackage{tcolorbox}
+\usepackage{enumitem, float, caption, microtype}
+\usepackage{tikz}
+\usepackage{setspace}
+\usepackage{indentfirst}
+\tcbuselibrary{most}
+
+\emergencystretch=3em
+\sloppy
+
+% ---------- 配色：Ocean Gradient ----------
+\definecolor{navyBlue}{HTML}{1E2761}
+\definecolor{deepBlue}{HTML}{065A82}
+\definecolor{tealAccent}{HTML}{14B8A6}
+\definecolor{lightGray}{HTML}{E2E8F0}
+\definecolor{darkText}{HTML}{1E293B}
+\definecolor{mutedText}{HTML}{64748B}
+\definecolor{goldAccent}{HTML}{D97706}
+\definecolor{codeBg}{HTML}{F1F5F9}
+
+% ---------- 超链接 ----------
+\hypersetup{colorlinks=true, linkcolor=deepBlue, urlcolor=tealAccent,
+  pdftitle={[报告标题]}, pdfauthor={[作者]}}
+
+% ============================================================
+% 标题层级
+% ============================================================
+
+% H1：深蓝粗体 + 2pt 蓝色下划线
+\titleformat{\section}
+  {\Large\bfseries\color{navyBlue}}
+  {\thesection}
+  {0.8em}{}
+  [{\color{navyBlue}\vspace{2pt}\hrule height 2pt}]
+
+% H2：13pt + \thesubsection（1.1格式）+ 浅灰细线
+\titleformat{\subsection}
+  {\fontsize{13}{16}\selectfont\bfseries\color{navyBlue}}
+  {\thesubsection}
+  {0.6em}{}
+  [{\color{lightGray}\vspace{1pt}\hrule height 0.5pt}]
+
+% H3：12pt + 编号
+\titleformat{\subsubsection}
+  {\fontsize{12}{15}\selectfont\bfseries\color{deepBlue}}
+  {\thesubsubsection}
+  {0.5em}{}
+
+\titlespacing*{\section}{0pt}{20pt}{8pt}
+\titlespacing*{\subsection}{0pt}{14pt}{5pt}
+\titlespacing*{\subsubsection}{0pt}{10pt}{4pt}
+
+% ---------- 目录标题 ----------
+\renewcommand{\contentsname}{%
+  \begin{center}{\LARGE\bfseries\color{navyBlue} 目\enspace 录}\end{center}%
+}
+
+% ---------- 首行缩进 ----------
+\setlength{\parindent}{2em}
+\setlength{\parskip}{3pt}
+
+% ---------- 页眉页脚 ----------
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\color{mutedText}\small [报告标题]}
+\fancyhead[R]{\color{mutedText}\small [机构名称]}
+\fancyfoot[C]{\color{mutedText}\small \thepage}
+\renewcommand{\headrulewidth}{0.4pt}
+\renewcommand{\headrule}{\hbox to\headwidth{%
+  \color{tealAccent}\leaders\hrule height \headrulewidth\hfill}}
+\renewcommand{\footrulewidth}{0pt}
+
+% ============================================================
+% 行内高亮（IPLeiria 风格：极浅底色）
+% \hl{}  → 青色 18% 底色，深蓝粗字（主要关键词）
+% \hls{} → 深蓝 12% 底色，深蓝字（次要强调）
+% ============================================================
+\newcommand{\hl}[1]{%
+  \colorbox{tealAccent!18!white}{\textcolor{navyBlue}{\textbf{#1}}}%
+}
+\newcommand{\hls}[1]{%
+  \colorbox{deepBlue!12!white}{\textcolor{deepBlue}{#1}}%
+}
+
+% ---------- 行内代码 ----------
+\newcommand{\code}[1]{%
+  {\ttfamily\small\colorbox{codeBg}{\textcolor{deepBlue}{#1}}}%
+}
+
+% ============================================================
+% Block 环境（仿 IPLeiria Tips 风格）
+%   colback = color!8!white  → 极浅底色（8%）
+%   borderline west          → 左侧 1.5pt 色条
+%   attach title to upper    → 标题在正文区顶部
+% ============================================================
+
+% 💡 提示块（teal）
+\newtcolorbox{tipbox}[1][💡 提示]{
+    enhanced jigsaw,
+    colback=tealAccent!8!white,
+    colframe=tealAccent!8!white,
+    sharp corners,
+    borderline west={1.5pt}{0pt}{tealAccent},
+    arc=0pt, top=4pt, bottom=6pt, left=10pt, right=8pt,
+    title={\small\bfseries\textcolor{tealAccent}{#1}},
+    attach title to upper={\par\smallskip},
+    fontupper=\small\color{darkText},
+}
+
+% ℹ 说明块（deepBlue）
+\newtcolorbox{notebox}[1][ℹ 说明]{
+    enhanced jigsaw,
+    colback=deepBlue!8!white,
+    colframe=deepBlue!8!white,
+    sharp corners,
+    borderline west={1.5pt}{0pt}{deepBlue},
+    arc=0pt, top=4pt, bottom=6pt, left=10pt, right=8pt,
+    title={\small\bfseries\textcolor{deepBlue}{#1}},
+    attach title to upper={\par\smallskip},
+    fontupper=\small\color{darkText},
+}
+
+% ⚠ 注意块（goldAccent）
+\newtcolorbox{alertbox}[1][⚠ 注意]{
+    enhanced jigsaw,
+    colback=goldAccent!8!white,
+    colframe=goldAccent!8!white,
+    sharp corners,
+    borderline west={1.5pt}{0pt}{goldAccent},
+    arc=0pt, top=4pt, bottom=6pt, left=10pt, right=8pt,
+    title={\small\bfseries\textcolor{goldAccent}{#1}},
+    attach title to upper={\par\smallskip},
+    fontupper=\small\color{darkText},
+}
+
+% 引用块（> 语法）
+\newtcolorbox{quoteblock}{
+    enhanced jigsaw,
+    colback=tealAccent!6!white,
+    colframe=tealAccent!6!white,
+    sharp corners,
+    borderline west={2pt}{0pt}{tealAccent},
+    arc=0pt, top=4pt, bottom=4pt, left=10pt, right=8pt,
+    fontupper=\small\color{mutedText}\itshape,
+}
+
+% ---------- 代码块 ----------
+\lstset{
+  basicstyle=\ttfamily\small\color{darkText},
+  keywordstyle=\bfseries\color{deepBlue},
+  stringstyle=\color{tealAccent},
+  commentstyle=\itshape\color{mutedText},
+  backgroundcolor=\color{codeBg},
+  frame=single, rulecolor=\color{lightGray},
+  numbers=left, numberstyle=\tiny\color{mutedText}, numbersep=8pt,
+  breaklines=true, tabsize=2,
+  xleftmargin=12pt, xrightmargin=4pt,
+}
+\lstnewenvironment{codeblock}[1][]{\lstset{#1}}{}
+
+% ---------- 列表 ----------
+\setlist[itemize,1]{label={\color{tealAccent}•}, leftmargin=1.8em, topsep=3pt, itemsep=2pt}
+\setlist[itemize,2]{label={\color{navyBlue}◦}, leftmargin=1.5em, topsep=1pt}
+\setlist[enumerate,1]{leftmargin=1.8em, topsep=3pt, itemsep=2pt}
+
+\captionsetup{font={small,color=mutedText}, labelfont={bf,color=navyBlue}, labelsep=period}
+
+% ============================================================
+% 封面命令（仿 IPLeiria classic 风格）
+% 版式：文档类型 → 主标题 → 分隔线 → 参与方 / 版本 / 作者 / 日期 → 摘要
+%
+% 用法：\reporttitle{文档类型}{主标题}{参与方A}{参与方B}{版本}{作者}{日期}{摘要}
+% ============================================================
+\newcommand{\reporttitle}[8]{%
+  \begin{titlepage}
+    \thispagestyle{empty}
+    \setlength{\parindent}{0pt}
+    % 全页深蓝背景（TikZ overlay，不影响 geometry）
+    \begin{tikzpicture}[overlay, remember picture]
+      \fill[navyBlue] (current page.south west) rectangle (current page.north east);
+    \end{tikzpicture}%
+    \color{white}%
+    %
+    \vspace*{2.5cm}
+    %
+    % 文档类型标签（顶部小字）
+    \noindent{\small\bfseries\color{white!50}\MakeUppercase{#1}}\par
+    \vspace{1.2cm}%
+    %
+    % 主标题（IPLeiria：\makebox[\textwidth][l]{\parbox{...}}）
+    \noindent
+    \makebox[\textwidth][l]{%
+      \parbox{\dimexpr\textwidth-1cm\relax}{%
+        \setstretch{1.05}%
+        \raggedright\bfseries\fontsize{28}{34}\selectfont\color{white}
+        #2%
+      }%
+    }\par
+    \vspace{0.8cm}%
+    %
+    % 分隔线
+    \noindent{\color{white!30}\rule{\linewidth}{0.6pt}}\par
+    \vspace{0.8cm}%
+    %
+    % 参与方
+    \noindent{\normalsize\color{white!80} #3}\par
+    \vspace{0.2cm}%
+    \noindent{\normalsize\color{white!70} #4}\par
+    \vspace{0.5cm}%
+    %
+    % 版本 / 作者 / 日期
+    \noindent{%
+      \small\color{white!55}
+      \textbf{\color{white!70}版本}\enspace #5
+      \enspace\textbar\enspace
+      \textbf{\color{white!70}作者}\enspace #6
+      \enspace\textbar\enspace
+      #7%
+    }\par
+    \vspace{2cm}%
+    %
+    % 摘要区
+    \noindent
+    \begin{tcolorbox}[
+      enhanced,
+      colback=white!6!navyBlue,
+      colframe=white!20,
+      toprule=0.5pt, bottomrule=0.5pt, leftrule=0.5pt, rightrule=0.5pt,
+      arc=2pt, left=14pt, right=14pt, top=10pt, bottom=12pt,
+      width=\linewidth,
+      fontupper=\small\color{white!80}]
+      \noindent{\color{white!50}\small\bfseries\MakeUppercase{Abstract}}\par
+      \vspace{5pt}
+      #8
+    \end{tcolorbox}
+    \vfill
+  \end{titlepage}
+  \setlength{\parindent}{2em}%
+}
+
+% ============================================================
+% 文档元信息（修改这里）
+% ============================================================
+\begin{document}
+
+\reporttitle
+  {[文档类型]}                 % 如：技术报告 / 项目方案
+  {[报告主标题]}               % 主标题
+  {[机构/公司 A]}              % 参与方 A
+  {[机构/公司 B]}              % 参与方 B
+  {v1.0}                       % 版本号
+  {[作者姓名]}                 % 作者
+  {\today}                     % 日期
+  {在此填写报告摘要，200--300 字，涵盖背景、方法和主要结论。}
+
+% 目录（可选，去掉注释启用）
+\tableofcontents
+\newpage
+
+% ============================================================
+\section{摘要}
+% ============================================================
+
+在此处填写报告摘要。建议 200--300 字，涵盖背景、方法、主要结论。
+
+\begin{quoteblock}
+  核心结论可以放入引用块突出显示，对应 Markdown 的 \texttt{>} 语法。
+\end{quoteblock}
+
+% ============================================================
+\section{背景与目标}
+% ============================================================
+
+\subsection{背景说明}
+
+正文段落，支持中英文混排。引用文献使用 \texttt{\textbackslash cite\{\}}。\\
+行内高亮：\hl{关键词}，次要强调：\hls{术语}，行内代码：\code{python main.py}。
+
+\subsubsection{具体背景细节}
+
+更细粒度的内容放在三级标题下。
+
+\subsection{目标}
+
+\begin{itemize}
+  \item 一级目标：[描述]
+  \begin{itemize}
+    \item 子目标 A
+    \item 子目标 B
+  \end{itemize}
+  \item 二级目标：[描述]
+\end{itemize}
+
+% ============================================================
+\section{方法}
+% ============================================================
+
+\subsection{技术方案}
+
+\begin{enumerate}
+  \item 第一步：[描述]
+  \item 第二步：[描述]
+  \item 第三步：[描述]
+\end{enumerate}
+
+\begin{tipbox}[💡 最佳实践]
+  这里放提示信息，对应 Markdown 的 Tip 或 Note 标注。极浅青色底色 + 左侧色条。
+\end{tipbox}
+
+\subsection{关键公式}
+
+行内公式：$E = mc^2$，独立公式：
+
+\begin{equation}
+  \mathcal{L} = \frac{1}{2}m\dot{x}^2 - V(x)
+  \label{eq:example}
+\end{equation}
+
+% ============================================================
+\section{数据与结果}
+% ============================================================
+
+\subsection{数据表格}
+
+\begin{table}[H]
+  \centering
+  \caption{实验数据汇总}
+  \label{tab:data}
+  \begin{tabularx}{0.9\textwidth}{lXcc}
+    \toprule
+    \textbf{类别} & \textbf{说明} & \textbf{数值} & \textbf{单位} \\
+    \midrule
+    指标 A & 描述 & 1.234 & ms \\
+    指标 B & 描述 & 5.678 & \% \\
+    \bottomrule
+  \end{tabularx}
+\end{table}
+
+\subsection{代码示例}
+
+\begin{codeblock}[language=Python, caption={Python 示例}]
+import numpy as np
+
+def process(data):
+    """处理数据"""
+    return np.mean(data)    # 计算均值
+\end{codeblock}
+
+% ============================================================
+\section{分析与讨论}
+% ============================================================
+
+\begin{notebox}[ℹ 重要说明]
+  这里放重要说明或注意事项。极浅蓝色底色 + 左侧深蓝色条。
+\end{notebox}
+
+\begin{alertbox}[⚠ 已知局限]
+  这里放警告或局限性说明。极浅金色底色 + 左侧金色色条。
+\end{alertbox}
+
+% ============================================================
+\section{结论与下一步}
+% ============================================================
+
+\begin{itemize}
+  \item 结论一：[描述]
+  \item 结论二：[描述]
+\end{itemize}
+
+\begin{thebibliography}{9}
+  \bibitem{ref1} 作者. \textit{文献标题}. 出版社, 2024.
+\end{thebibliography}
+
+\end{document}

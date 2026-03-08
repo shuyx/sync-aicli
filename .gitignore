@@ -1,0 +1,60 @@
+# macOS
+.DS_Store
+**/.DS_Store
+
+# 运行时缓存（不需要同步）
+*.log
+cache/
+__pycache__/
+*.pyc
+node_modules/
+
+# Claude Code 运行时文件（不同步）
+claude-code/history.jsonl
+claude-code/stats-cache.json
+claude-code/mcp-needs-auth-cache.json
+claude-code/.config.json
+claude-code/.credentials.json
+claude-code/backups/
+claude-code/projects/
+claude-code/transcripts/
+claude-code/tasks/
+claude-code/todos/
+claude-code/usage-data/
+claude-code/shell-snapshots/
+claude-code/file-history/
+claude-code/statsig/
+claude-code/telemetry/
+claude-code/debug/
+claude-code/downloads/
+claude-code/sessions/
+claude-code/ide/
+claude-code/hooks/
+claude-code/paste-cache/
+claude-code/plugins/
+
+# Codex 运行时文件（不同步）
+codex/history.jsonl
+codex/models_cache.json
+codex/.codex-global-state.json
+codex/sessions/
+codex/memories/
+codex/log/
+codex/tmp/
+codex/shell_snapshots/
+codex/sqlite/
+codex/vendor_imports/
+codex/*.sqlite*
+codex/version.json
+codex/auth.json
+codex/.personality_migration
+
+# OpenCode 运行时文件
+opencode/node_modules/
+opencode/bun.lock
+opencode/command/
+opencode/*.bak*
+opencode/*副本*
+
+# Antigravity brain（个人对话记录）
+antigravity/brain/

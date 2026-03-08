@@ -1,0 +1,173 @@
+{
+    "general": {
+        "enableAutoUpdate": true,
+        "enablePromptCompletion": true,
+        "previewFeatures": true,
+        "sessionRetention": {
+            "warningAcknowledged": true,
+            "enabled": true,
+            "maxAge": "120d"
+        }
+    },
+    "ide": {
+        "enabled": true
+    },
+    "mcpServers": {
+        "context7": {
+            "args": [
+                "-y",
+                "@upstash/context7-mcp"
+            ],
+            "command": "npx",
+            "timeout": 60000
+        },
+        "fetch": {
+            "args": [
+                "mcp-server-fetch"
+            ],
+            "command": "uvx",
+            "timeout": 60000
+        },
+        "filesystem": {
+            "args": [
+                "-y",
+                "@modelcontextprotocol/server-filesystem",
+                "OBSIDIAN_PATH"
+            ],
+            "command": "npx",
+            "timeout": 60000
+        },
+        "git": {
+            "args": [
+                "mcp-server-git"
+            ],
+            "command": "uvx",
+            "timeout": 60000
+        },
+        "github": {
+            "args": [
+                "-y",
+                "@modelcontextprotocol/server-github"
+            ],
+            "command": "npx",
+            "env": {
+                "GITHUB_PERSONAL_ACCESS_TOKEN": "{{GITHUB_PAT}}"
+            },
+            "timeout": 60000
+        },
+        "memory": {
+            "args": [
+                "-y",
+                "@modelcontextprotocol/server-memory"
+            ],
+            "command": "npx",
+            "timeout": 60000
+        },
+        "playwright": {
+            "args": [
+                "@playwright/mcp@latest"
+            ],
+            "command": "npx",
+            "env": {},
+            "timeout": 60000
+        },
+        "ripgrep": {
+            "args": [
+                "-y",
+                "mcp-ripgrep@latest"
+            ],
+            "command": "npx",
+            "timeout": 60000
+        },
+        "sequential-thinking": {
+            "args": [
+                "-y",
+                "@modelcontextprotocol/server-sequential-thinking"
+            ],
+            "command": "npx",
+            "timeout": 60000
+        },
+        "time": {
+            "args": [
+                "-y",
+                "@modelcontextprotocol/server-time"
+            ],
+            "command": "npx",
+            "timeout": 60000
+        },
+        "ai4scholar": {
+            "command": "npx",
+            "args": [
+                "-y",
+                "mcp-remote",
+                "https://mcp.ai4scholar.net/sse",
+                "--header",
+                "Authorization: Bearer {{AI4SCHOLAR_KEY}}"
+            ],
+            "timeout": 60000
+        },
+        "arxiv": {
+            "command": "npx",
+            "args": [
+                "-y",
+                "arxiv-mcp-server"
+            ],
+            "timeout": 60000
+        },
+        "exa": {
+            "command": "npx",
+            "args": [
+                "-y",
+                "exa-mcp-server"
+            ],
+            "env": {
+                "EXA_API_KEY": "{{EXA_KEY}}"
+            },
+            "timeout": 60000
+        },
+        "web-search-prime": {
+            "command": "npx",
+            "args": [
+                "-y",
+                "mcp-remote",
+                "https://open.bigmodel.cn/api/mcp/web_search_prime/mcp",
+                "--header",
+                "Authorization: Bearer {{ZHIPU_KEY}}"
+            ],
+            "timeout": 60000
+        },
+        "brave-search": {
+            "command": "npx",
+            "args": [
+                "-y",
+                "@modelcontextprotocol/server-brave-search"
+            ],
+            "env": {
+                "BRAVE_API_KEY": "{{BRAVE_KEY}}"
+            },
+            "timeout": 60000
+        },
+        "tavily": {
+            "command": "npx",
+            "args": [
+                "-y",
+                "tavily-mcp"
+            ],
+            "env": {
+                "TAVILY_API_KEY": "{{TAVILY_KEY}}"
+            },
+            "timeout": 60000
+        }
+    },
+    "security": {
+        "auth": {
+            "selectedType": "oauth-personal"
+        }
+    },
+    "tools": {
+        "autoAccept": true,
+        "shell": {
+            "showColor": true
+        }
+    }
+}

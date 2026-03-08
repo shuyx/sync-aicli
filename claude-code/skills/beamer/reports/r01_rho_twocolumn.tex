@@ -1,0 +1,203 @@
+% ============================================================
+% R01 - Rho-class · 双栏学术报告
+% 文档类：rho-class（需 Overleaf 模板或自行下载）
+% 编译器：pdfLaTeX（模板已内置 pdfLaTeX 优化）
+% 风格：双栏，学术期刊排版，Fira Sans 标题字体
+% 适合：研究报告、实验报告、技术文档、学术论文
+%
+% Overleaf 使用方法：
+%   搜索 "rho-class" 模板，直接 Open as Template
+%   或访问：https://github.com/MemoJimenez/Rho-class
+%
+% 原模板作者：Guillermo Jimenez (CC BY 4.0)
+% 去个人品牌版本，保留完整功能结构
+% ============================================================
+
+\documentclass[9pt,a4paper,twocolumn,twoside]{rho-class/rho}
+\usepackage[english]{babel}
+
+%% 中文支持（如需中文，改用 XeLaTeX 并替换babel）
+%% \usepackage[UTF8]{ctex}
+
+%----------------------------------------------------------
+% 文档元数据
+%----------------------------------------------------------
+
+\doctype{[报告类型，如：Research Article / Lab Report / Technical Report]}
+\title{[报告标题]}
+
+%----------------------------------------------------------
+% 作者与机构（支持多作者）
+%----------------------------------------------------------
+
+\author[{\textasteriskcentered},a,1]{作者一}
+\author[{\textdagger},b,2]{作者二}
+\author[{\textdagger},c,3]{作者三}
+
+\affil[a]{机构一}
+\affil[b]{机构二}
+\affil[c]{机构三}
+
+\dates{编写于 \today}
+
+%----------------------------------------------------------
+% 通讯作者 & 文档说明
+%----------------------------------------------------------
+
+\corres{\textsuperscript{\textasteriskcentered}通讯作者：\href{mailto:author@institute.org}{author@institute.org}}
+\corres{\textsuperscript{\textdagger}这些作者对本工作有同等贡献。}
+
+\docinfo{本文档使用 Rho-class (v.3) 排版，pdfLaTeX 编译，无错误。}
+
+%----------------------------------------------------------
+% 期刊/期卷信息
+%----------------------------------------------------------
+
+\journalname{[机构/期刊名称]}
+\journal{[期刊全名] 2026}
+\theday{\today}
+\vol{X}
+\no{X}
+
+%----------------------------------------------------------
+% 摘要与关键词
+%----------------------------------------------------------
+
+\begin{abstract}
+    [在此处填写摘要。描述研究背景、方法、主要结果和结论。
+    建议 150--250 字。支持 \LaTeX{} 格式化命令。]
+\end{abstract}
+
+\keywords{[关键词1], [关键词2], [关键词3], [关键词4]}
+
+%----------------------------------------------------------
+
+\begin{document}
+
+    \maketitle
+    \thispagestyle{firststyle}
+
+%----------------------------------------------------------
+% 可选目录（默认关闭，去掉注释启用）
+%----------------------------------------------------------
+% \tableofcontents
+
+%----------------------------------------------------------
+
+\section{引言}
+
+    \rhostart{在}此处撰写引言，用 \texttt{\textbackslash rhostart\{首字\}} 命令
+    实现首字下沉效果。说明研究背景、研究问题及本文贡献。
+
+    段落正文支持正常 \LaTeX{} 排版。引用参考文献使用
+    \texttt{\textbackslash cite\{\}} 命令，如 \cite{ref1}。
+
+%----------------------------------------------------------
+
+\section{方法}
+
+    \subsection{实验设计}
+    
+        在此描述实验方法、数据收集过程和分析手段。
+
+    \subsection{数据分析}
+
+        公式示例（\equref{eq:example}）：
+
+        \begin{equation}\label{eq:example}
+            i\hbar \frac{\partial}{\partial t}\Psi(\mathbf{r},t) =
+            \left[\frac{-\hbar^2}{2m}\nabla^2 + V(\mathbf{r},t)\right]
+            \Psi(\mathbf{r},t)
+        \end{equation}
+
+%----------------------------------------------------------
+
+\section{结果}
+
+    \subsection{数据表格}
+
+        \tabref{tab:results} 展示实验数据。
+
+        \begin{table}[H]
+            \caption{实验结果数据}
+            \label{tab:results}
+            \begin{tabular}{
+                >{\raggedright\arraybackslash}p{0.25\columnwidth}
+                >{\raggedright\arraybackslash}p{0.29\columnwidth}
+                >{\raggedright\arraybackslash}p{0.31\columnwidth}
+            }
+            \toprule
+            \textbf{条件} & \textbf{测量值} & \textbf{误差} \\
+            \midrule
+            条件 A & 1.234 & ±0.012 \\
+            条件 B & 5.678 & ±0.034 \\
+            条件 C & 9.012 & ±0.056 \\
+            \bottomrule
+            \end{tabular}
+            \tabletext{注：数值为三次重复测量的均值。}
+        \end{table}
+
+    \subsection{图示}
+
+        \figref{fig:result} 展示实验结果图。
+
+        \begin{figure}[H]
+            \centering
+            \includegraphics[width=0.9\columnwidth]{figures/example.pdf}
+            \caption{实验结果图示。}
+            \label{fig:result}
+        \end{figure}
+
+%----------------------------------------------------------
+
+\section{讨论}
+
+    对结果进行分析和解释，与相关文献对比，讨论局限性。
+
+    使用提示框环境示例：
+
+    \begin{note}
+        这是一个说明框（note 环境）。适合放置重要提示、
+        注意事项或补充说明。
+    \end{note}
+
+    \begin{rhoenv}[frametitle=自定义标题框]
+        这是 rhoenv 自定义框，可以设置任意标题。
+        适合放置重要定义、公式推导或代码说明。
+    \end{rhoenv}
+
+%----------------------------------------------------------
+
+\section{代码示例}
+
+    使用 listings 包（推荐，无需额外安装）：
+
+    \begin{code}
+        \lstinputlisting[language=python]{example.py}
+        \label{lst:code1}
+        \caption{Python 示例代码。}
+    \end{code}
+
+    行内代码：\inlinecode{print("Hello, World!")}
+
+%----------------------------------------------------------
+
+\section{结论}
+
+    总结主要发现，说明研究的理论意义和实践价值，
+    提出未来工作方向。
+
+%----------------------------------------------------------
+
+\section*{致谢}
+\addcontentsline{toc}{section}{致谢}
+
+    感谢 [合作者/资助方/机构] 对本研究的支持。
+
+%----------------------------------------------------------
+
+\printbibliography
+
+%----------------------------------------------------------
+
+\end{document}

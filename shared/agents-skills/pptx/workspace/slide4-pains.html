@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+html { background: #ffffff; }
+body {
+  width: 720pt; height: 405pt; margin: 0; padding: 0;
+  background: #F8FAFC; font-family: Arial, sans-serif;
+  display: flex; flex-direction: column;
+}
+.header {
+  background: #0F172A; padding: 12pt 30pt;
+  border-bottom: 4pt solid #0369A1;
+}
+.header h1 {
+  color: #ffffff; font-size: 22pt;
+  font-weight: bold; margin: 0;
+}
+.content {
+  flex: 1; padding: 10pt 30pt 36pt;
+  display: flex; flex-wrap: wrap;
+  gap: 12pt; align-content: flex-start;
+}
+.pain-box {
+  background: #FEF2F2; border: 2pt solid #FEE2E2;
+  border-left: 4pt solid #EA580C;
+  padding: 12pt; width: calc(50% - 6pt);
+  box-sizing: border-box;
+}
+.pain-icon-bg {
+  background: #EA580C;
+  width: 32pt; height: 32pt;
+  display: inline-block;
+  margin-bottom: 8pt;
+  text-align: center;
+}
+.pain-icon {
+  color: #ffffff; font-weight: bold;
+  font-size: 18pt; line-height: 32pt;
+}
+.pain-title {
+  font-size: 13pt; font-weight: bold;
+  color: #DC2626; margin-bottom: 6pt;
+}
+.pain-desc {
+  font-size: 9pt; color: #7F1D1D;
+  line-height: 1.3;
+}
+</style>
+</head>
+<body>
+<div class="header">
+  <h1>关键痛点</h1>
+</div>
+<div class="content">
+  <div class="pain-box">
+    <div class="pain-icon-bg">
+      <p class="pain-icon">!</p>
+    </div>
+    <p class="pain-title">伦理敏感性</p>
+    <p class="pain-desc">涉及儿童保护与死亡话题，极易引发社会争议</p>
+  </div>
+
+  <div class="pain-box">
+    <div class="pain-icon-bg">
+      <p class="pain-icon">!</p>
+    </div>
+    <p class="pain-title">技术挑战</p>
+    <p class="pain-desc">延时问题、语音克隆质量、多领域技术整合难度高</p>
+  </div>
+
+  <div class="pain-box">
+    <div class="pain-icon-bg">
+      <p class="pain-icon">!</p>
+    </div>
+    <p class="pain-title">用户心理障碍</p>
+    <p class="pain-desc">突兀感、认知混淆、对"欺骗"的担忧影响产品接受度</p>
+  </div>
+
+  <div class="pain-box">
+    <div class="pain-icon-bg">
+      <p class="pain-icon">!</p>
+    </div>
+    <p class="pain-title">依赖成瘾风险</p>
+    <p class="pain-desc">儿童可能拒绝真实社交，过度沉溺虚拟陪伴</p>
+  </div>
+</div>
+</body>
+</html>
