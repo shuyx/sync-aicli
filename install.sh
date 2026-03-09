@@ -56,7 +56,7 @@ install_config() {
 
   if [[ ! -f "$repo_file" ]]; then
     print_step "⚠ " "$label → 仓库中无此文件，跳过"
-    ((SKIPPED++))
+    ((SKIPPED++)) || true
     return
   fi
 
@@ -71,7 +71,7 @@ install_config() {
     cp "$repo_file" "$target"
   fi
   print_step "✅" "$label"
-  ((INSTALLED++))
+  ((INSTALLED++)) || true
 }
 
 # ── 辅助：安装 skills 目录 ────────────────────────────────
@@ -79,7 +79,7 @@ install_skills() {
   local src="$1" dst="$2" label="$3"
   if [[ ! -d "$src" ]]; then
     print_step "⚠ " "$label → 仓库中无此目录，跳过"
-    ((SKIPPED++))
+    ((SKIPPED++)) || true
     return
   fi
   mkdir -p "$dst"
@@ -88,7 +88,7 @@ install_skills() {
   local count
   count=$(find "$src" -name "SKILL.md" | wc -l | tr -d ' ')
   print_step "✅" "$label ($count skills)"
-  ((INSTALLED++))
+  ((INSTALLED++)) || true
 }
 
 # ═══════════════════════════════════════════════════════════
@@ -202,7 +202,7 @@ ANTI_SKILL_OK=0; ANTI_SKILL_TOTAL=${#ANTI_SKILLS[@]}
 for sk in "${ANTI_SKILLS[@]}"; do
   if [[ -f "${HOME_PATH}/.gemini/antigravity/skills/${sk}/SKILL.md" ]]; then
     echo "    ✅ $sk"
-    ((ANTI_SKILL_OK++))
+    ((ANTI_SKILL_OK++)) || true
   else
     echo "    ❌ $sk (缺失)"
   fi
@@ -230,7 +230,7 @@ CC_SKILL_OK=0; CC_SKILL_TOTAL=${#CC_SKILLS[@]}
 for sk in "${CC_SKILLS[@]}"; do
   if [[ -f "${HOME_PATH}/.claude/skills/${sk}/SKILL.md" ]]; then
     echo "    ✅ $sk"
-    ((CC_SKILL_OK++))
+    ((CC_SKILL_OK++)) || true
   else
     echo "    ❌ $sk (缺失)"
   fi
@@ -284,7 +284,7 @@ SH_SKILL_OK=0; SH_SKILL_TOTAL=${#SHARED_SKILLS[@]}
 for sk in "${SHARED_SKILLS[@]}"; do
   if [[ -f "${HOME_PATH}/.agents/skills/${sk}/SKILL.md" ]]; then
     echo "    ✅ $sk"
-    ((SH_SKILL_OK++))
+    ((SH_SKILL_OK++)) || true
   else
     echo "    ❌ $sk (缺失)"
   fi
