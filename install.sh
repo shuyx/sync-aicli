@@ -187,7 +187,17 @@ install_skills \
 install_skills \
   "${REPO_DIR}/shared/agents-workflows" \
   "${HOME_PATH}/.agents/workflows" \
-  "Shared .agents/workflows"
+  "Shared .agents/workflows (~/.agents)"
+
+install_skills \
+  "${REPO_DIR}/shared/agents-workflows" \
+  "${OBSIDIAN_PATH}/.agents/workflows" \
+  "Shared .agents/workflows (Obsidian vault)"
+
+install_skills \
+  "${REPO_DIR}/shared/agents-rules" \
+  "${OBSIDIAN_PATH}/.agents/rules" \
+  "Shared .agents/rules (Obsidian vault)"
 
 # ═══════════════════════════════════════════════════════════
 print_header "📊 Step 5/5 — 能力同步验证报告"

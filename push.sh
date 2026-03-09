@@ -98,7 +98,9 @@ echo "── Skills ────────────────────
 sync_skills "${HOME_PATH}/.gemini/antigravity/skills" "${REPO_DIR}/antigravity/skills"       "Antigravity skills"
 sync_skills "${HOME_PATH}/.claude/skills"             "${REPO_DIR}/claude-code/skills"       "Claude Code skills"
 sync_skills "${HOME_PATH}/.agents/skills"             "${REPO_DIR}/shared/agents-skills"     "Shared .agents/skills"
-sync_skills "${HOME_PATH}/.agents/workflows"          "${REPO_DIR}/shared/agents-workflows"  "Shared .agents/workflows"
+sync_skills "${HOME_PATH}/.agents/workflows"          "${REPO_DIR}/shared/agents-workflows"  "Shared .agents/workflows (~/.agents)"
+sync_skills "${OBSIDIAN_PATH}/.agents/workflows"      "${REPO_DIR}/shared/agents-workflows"  "Shared .agents/workflows (Obsidian)"
+sync_skills "${OBSIDIAN_PATH}/.agents/rules"          "${REPO_DIR}/shared/agents-rules"      "Shared .agents/rules (Obsidian)"
 
 echo ""
 echo "── Git push ──────────────────────────────────────────"
