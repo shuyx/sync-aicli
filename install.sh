@@ -176,54 +176,120 @@ check_mcp() {
   fi
 }
 
+# ── 辅助：检查 skill 是否存在 ──────────────────────────
+check_skill() {
+  local dir="$1" name="$2"
+  if [[ -f "${dir}/${name}/SKILL.md" ]]; then
+    echo "    ✅ $name"
+  else
+    echo "    ❌ $name (缺失)"
+  fi
+}
+
 echo "  ▶ Antigravity MCP (${HOME_PATH}/.gemini/settings.json)"
 for mcp in brave-search exa tavily web-search-prime ai4scholar arxiv \
-           github git playwright fetch ripgrep memory context7 sequential-thinking; do
+           github git playwright fetch ripgrep memory context7 \
+           sequential-thinking time filesystem; do
   check_mcp "antigravity" "${HOME_PATH}/.gemini/settings.json" "$mcp"
 done
 
 echo ""
 echo "  ▶ Antigravity Skills (${HOME_PATH}/.gemini/antigravity/skills/)"
-ANTI_SKILL_COUNT=0
-if [[ -d "${HOME_PATH}/.gemini/antigravity/skills" ]]; then
-  for skill_dir in "${HOME_PATH}/.gemini/antigravity/skills"/*/; do
-    [[ -f "${skill_dir}SKILL.md" ]] && {
-      sname=$(basename "$skill_dir")
-      echo "    ✅ $sname"
-      ((ANTI_SKILL_COUNT++))
-    }
-  done
-  echo "    → 共 $ANTI_SKILL_COUNT 个 Skills"
-fi
+ANTI_SKILLS=(beamer content-research-writer csv-data-summarizer deep-search \
+             define file-organizer fix humanizer knowledge-corpus-builder \
+             markdown-to-pdf-skill mineru-pdf-sync perplexica reddit-fetch)
+ANTI_SKILL_OK=0; ANTI_SKILL_TOTAL=${#ANTI_SKILLS[@]}
+for sk in "${ANTI_SKILLS[@]}"; do
+  if [[ -f "${HOME_PATH}/.gemini/antigravity/skills/${sk}/SKILL.md" ]]; then
+    echo "    ✅ $sk"
+    ((ANTI_SKILL_OK++))
+  else
+    echo "    ❌ $sk (缺失)"
+  fi
+done
+echo "    → ${ANTI_SKILL_OK}/${ANTI_SKILL_TOTAL} Skills"
 
 echo ""
-echo "  ▶ Claude Code MCP (.claude/settings.json)"
+echo "  ▶ Claude Code (.claude/)"
 if [[ -f "${HOME_PATH}/.claude/settings.json" ]]; then
   echo "    ✅ settings.json 存在"
-  [[ -f "${HOME_PATH}/.claude/CLAUDE.md" ]] && echo "    ✅ CLAUDE.md 存在"
+else
+  echo "    ❌ settings.json 缺失"
 fi
-CC_SKILL_COUNT=$(find "${HOME_PATH}/.claude/skills" -name "SKILL.md" 2>/dev/null | wc -l | tr -d ' ')
-echo "    ✅ Claude Code Skills: $CC_SKILL_COUNT 个"
+[[ -f "${HOME_PATH}/.claude/CLAUDE.md" ]] && echo "    ✅ CLAUDE.md 存在" || echo "    ❌ CLAUDE.md 缺失"
 
 echo ""
-echo "  ▶ Codex (~/.codex/config.toml)"
+echo "  ▶ Claude Code Skills (${HOME_PATH}/.claude/skills/)"
+CC_SKILLS=(algorithmic-art artifacts-builder beamer brand-guidelines browser \
+           canvas-design changelog-generator claude-to-im codeagent \
+           competitive-ads-extractor connect content-research-writer \
+           csv-data-summarizer define file-organizer fix humanizer \
+           image-enhancer invoice-organizer markdown-to-pdf-skill \
+           mineru-pdf-sync reddit-fetch)
+CC_SKILL_OK=0; CC_SKILL_TOTAL=${#CC_SKILLS[@]}
+for sk in "${CC_SKILLS[@]}"; do
+  if [[ -f "${HOME_PATH}/.claude/skills/${sk}/SKILL.md" ]]; then
+    echo "    ✅ $sk"
+    ((CC_SKILL_OK++))
+  else
+    echo "    ❌ $sk (缺失)"
+  fi
+done
+echo "    → ${CC_SKILL_OK}/${CC_SKILL_TOTAL} Skills"
+
+echo ""
+echo "  ▶ Codex MCP (~/.codex/config.toml)"
 if [[ -f "${HOME_PATH}/.codex/config.toml" ]]; then
-  echo "    ✅ config.toml 存在"
   MODEL=$(grep '^model ' "${HOME_PATH}/.codex/config.toml" | head -1 | cut -d'"' -f2)
-  echo "    ✅ 主模型：$MODEL"
-  MCP_COUNT=$(grep -c '^\[mcp_servers\.' "${HOME_PATH}/.codex/config.toml" 2>/dev/null || echo 0)
-  echo "    ✅ MCP 数量：$MCP_COUNT 个"
+  echo "    ✅ config.toml 存在 | 主模型：$MODEL"
+  for mcp in notion playwright filesystem fetch context7 obsidian deepwiki \
+             github git ripgrep sequential-thinking memory time; do
+    if grep -q "\[mcp_servers\.${mcp}" "${HOME_PATH}/.codex/config.toml" 2>/dev/null; then
+      echo "    ✅ $mcp"
+    else
+      echo "    ❌ $mcp (未找到)"
+    fi
+  done
+else
+  echo "    ❌ config.toml 缺失"
 fi
 
 echo ""
-echo "  ▶ OpenCode (~/.config/opencode/opencode.json)"
+echo "  ▶ OpenCode MCP (~/.config/opencode/opencode.json)"
 if [[ -f "${HOME_PATH}/.config/opencode/opencode.json" ]]; then
-  echo "    ✅ opencode.json 存在"
-  OC_MODEL=$(python3 -c "import json; d=json.load(open('${HOME_PATH}/.config/opencode/opencode.json')); print(d.get('model','?'))" 2>/dev/null || echo "?")
-  echo "    ✅ 主模型：$OC_MODEL"
-  OC_MCP=$(python3 -c "import json; d=json.load(open('${HOME_PATH}/.config/opencode/opencode.json')); print(len(d.get('mcp',{})))" 2>/dev/null || echo "?")
-  echo "    ✅ MCP 数量：$OC_MCP 个"
+  OC_MODEL=$(timeout 3 python3 -c "import json; d=json.load(open('${HOME_PATH}/.config/opencode/opencode.json')); print(d.get('model','?'))" 2>/dev/null || echo "?")
+  echo "    ✅ opencode.json 存在 | 主模型：$OC_MODEL"
+  for mcp in ai4scholar arxiv context7 exa filesystem git github memory \
+             playwright qmd ripgrep sequential-thinking time \
+             web-reader web-search-prime zai-mcp-server; do
+    if grep -q "\"${mcp}\"" "${HOME_PATH}/.config/opencode/opencode.json" 2>/dev/null; then
+      echo "    ✅ $mcp"
+    else
+      echo "    ❌ $mcp (未找到)"
+    fi
+  done
+else
+  echo "    ❌ opencode.json 缺失"
 fi
+
+echo ""
+echo "  ▶ Shared Skills (~/.agents/skills/)"
+SHARED_SKILLS=(agent-browser agentic-browser analytics-tracking bibi brainstorming \
+               browser-use codex-deep-search commit-work docx find-skills \
+               frontend-design inference-sh mckinsey-consultant notion pdf pptx \
+               python-executor remotion-best-practices requesting-code-review \
+               skill-creator smithery-ai-cli tavily-search ticktick vue \
+               web-design-guidelines web-search xlsx)
+SH_SKILL_OK=0; SH_SKILL_TOTAL=${#SHARED_SKILLS[@]}
+for sk in "${SHARED_SKILLS[@]}"; do
+  if [[ -f "${HOME_PATH}/.agents/skills/${sk}/SKILL.md" ]]; then
+    echo "    ✅ $sk"
+    ((SH_SKILL_OK++))
+  else
+    echo "    ❌ $sk (缺失)"
+  fi
+done
+echo "    → ${SH_SKILL_OK}/${SH_SKILL_TOTAL} Shared Skills"
 
 echo ""
 echo "  ┌─────────────────────────────────────────────┐"
