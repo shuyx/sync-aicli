@@ -44,6 +44,9 @@ trust_level = "trusted"
 [projects."HOME_PATH/Obsidian/githubx"]
 trust_level = "trusted"
 
+[projects."OBSIDIAN_PATH/商业孵化/【10】矿山自动化"]
+trust_level = "trusted"
+
 [mcp_servers.notion]
 url = "https://mcp.notion.com/mcp"
 
