@@ -11,6 +11,7 @@
 ### 配置文件
 
 - [ ] `~/.gemini/settings.json` 存在
+- [ ] `~/.gemini/GEMINI.md` 存在
 - [ ] 路径占位符已替换（`OBSIDIAN_PATH` → 本机实际路径）
 
 ### MCP 列表（16 项）

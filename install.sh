@@ -111,6 +111,10 @@ install_config \
   "${REPO_DIR}/antigravity/settings.json" \
   "${HOME_PATH}/.gemini/settings.json" \
   "Antigravity settings.json" "true"
+install_config \
+  "${REPO_DIR}/antigravity/GEMINI.md" \
+  "${HOME_PATH}/.gemini/GEMINI.md" \
+  "Antigravity GEMINI.md"
 
 echo ""
 echo "  ── Claude Code ───────────────────────────"
@@ -186,6 +190,15 @@ check_skill() {
   fi
 }
 
+echo "  ▶ Antigravity Config (.gemini/)"
+if [[ -f "${HOME_PATH}/.gemini/settings.json" ]]; then
+  echo "    ✅ settings.json 存在"
+else
+  echo "    ❌ settings.json 缺失"
+fi
+[[ -f "${HOME_PATH}/.gemini/GEMINI.md" ]] && echo "    ✅ GEMINI.md 存在" || echo "    ❌ GEMINI.md 缺失"
+
+echo ""
 echo "  ▶ Antigravity MCP (${HOME_PATH}/.gemini/settings.json)"
 for mcp in brave-search exa tavily web-search-prime ai4scholar arxiv \
            github git playwright fetch ripgrep memory context7 \

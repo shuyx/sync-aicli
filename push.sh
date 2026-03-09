@@ -58,6 +58,7 @@ sync_skills() {
 
 echo "── 配置文件 ──────────────────────────────────────────"
 to_template    "${HOME_PATH}/.gemini/settings.json"               "${REPO_DIR}/antigravity/settings.json"
+copy_direct    "${HOME_PATH}/.gemini/GEMINI.md"                   "${REPO_DIR}/antigravity/GEMINI.md"
 copy_direct    "${HOME_PATH}/.claude/settings.json"               "${REPO_DIR}/claude-code/settings.json"
 copy_direct    "${HOME_PATH}/.claude/CLAUDE.md"                   "${REPO_DIR}/claude-code/CLAUDE.md"
 to_template    "${HOME_PATH}/.codex/config.toml"                  "${REPO_DIR}/codex/config.toml"
