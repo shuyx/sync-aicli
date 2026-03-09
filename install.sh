@@ -14,14 +14,14 @@ CURRENT_USER=$(whoami)
 HOME_PATH="/Users/${CURRENT_USER}"
 
 # ── 机器→Obsidian 路径映射 ────────────────────────────────
-if [[ "$CURRENT_USER" == "mac-minishu" ]]; then
-  OBSIDIAN_PATH="/Users/mac-minishu/Obsidian/kevinob"
-elif [[ "$CURRENT_USER" == "yuanxin" ]]; then
-  OBSIDIAN_PATH="/Users/yuanxin/documents/kevinob"
-else
-  echo "⚠️  未识别用户名: $CURRENT_USER，请手动输入 Obsidian Vault 路径："
-  read -r OBSIDIAN_PATH
-fi
+case "$CURRENT_USER" in
+  "mac-minishu") OBSIDIAN_PATH="/Users/mac-minishu/Obsidian/kevinob" ;;
+  "yuanxin") OBSIDIAN_PATH="/Users/yuanxin/documents/kevinob" ;;
+  *)
+    echo "⚠️  未识别用户名: $CURRENT_USER，请手动输入 Obsidian Vault 路径："
+    read -r OBSIDIAN_PATH
+    ;;
+esac
 
 
 # ── 内部计数器 ────────────────────────────────────────────

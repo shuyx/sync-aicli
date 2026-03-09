@@ -9,12 +9,11 @@ REPO_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 CURRENT_USER=$(whoami)
 HOME_PATH="/Users/${CURRENT_USER}"
 
-declare -A OBSIDIAN_MAP=(
-  ["mac-minishu"]="/Users/mac-minishu/Obsidian/kevinob"
-  ["yuanxin"]="/Users/yuanxin/documents/kevinob"
-)
-
-OBSIDIAN_PATH="${OBSIDIAN_MAP[$CURRENT_USER]:-}"
+OBSIDIAN_PATH=""
+case "$CURRENT_USER" in
+  "mac-minishu") OBSIDIAN_PATH="/Users/mac-minishu/Obsidian/kevinob" ;;
+  "yuanxin") OBSIDIAN_PATH="/Users/yuanxin/documents/kevinob" ;;
+esac
 if [[ -z "$OBSIDIAN_PATH" ]]; then
   echo "⚠️  未识别用户名: $CURRENT_USER，请输入 Obsidian Vault 路径："
   read -r OBSIDIAN_PATH
