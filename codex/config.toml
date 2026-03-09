@@ -11,23 +11,19 @@ wire_api = "responses"
 requires_openai_auth = true
 env_key = "CRS_OAI_KEY"
 
-[models."gpt-5.2"]
+[models.gpt-5.2]
 id = "gpt-5.2"
 name = "GPT 5.2"
 
-[models."gpt-5.2-codex"]
+[models.gpt-5.2-codex]
 id = "gpt-5.2-codex"
 name = "GPT 5.2 Codex"
 
-[models."gpt-5.3-codex"]
+[models.gpt-5.3-codex]
 id = "gpt-5.3-codex"
 name = "GPT 5.3 Codex"
 
-# Trusted project paths — install.sh 会替换 HOME_PATH / OBSIDIAN_PATH
 [projects."HOME_PATH"]
-trust_level = "trusted"
-
-[projects."OBSIDIAN_PATH"]
 trust_level = "trusted"
 
 [projects."OBSIDIAN_PATH/商业孵化"]
@@ -36,10 +32,16 @@ trust_level = "trusted"
 [projects."OBSIDIAN_PATH/祥承电子"]
 trust_level = "trusted"
 
+[projects."OBSIDIAN_PATH"]
+trust_level = "trusted"
+
 [projects."OBSIDIAN_PATH/商业孵化/【0】脑机接口"]
 trust_level = "trusted"
 
 [projects."OBSIDIAN_PATH/商业孵化/【2】无人机"]
+trust_level = "trusted"
+
+[projects."HOME_PATH/Obsidian/githubx"]
 trust_level = "trusted"
 
 [mcp_servers.notion]
@@ -53,7 +55,7 @@ args = ["@playwright/mcp@latest"]
 [mcp_servers.filesystem]
 type = "stdio"
 command = "npx"
-args = ["-y", "@modelcontextprotocol/server-filesystem", "OBSIDIAN_PATH"]
+args = ["-y", "@modelcontextprotocol/server-filesystem", "HOME_PATH/Documents/【3】Obsidian/Obsidian Work"]
 
 [mcp_servers.fetch]
 type = "stdio"
@@ -67,7 +69,7 @@ args = ["-y", "@upstash/context7-mcp"]
 
 [mcp_servers.obsidian]
 command = "npx"
-args = ["-y", "mcp-obsidian", "OBSIDIAN_PATH"]
+args = ["-y", "mcp-obsidian", "HOME_PATH/Documents/【3】Obsidian/Obsidian Work"]
 
 [mcp_servers.deepwiki]
 url = "https://mcp.deepwiki.com/mcp"
@@ -78,7 +80,7 @@ command = "npx"
 args = ["-y", "@modelcontextprotocol/server-github"]
 
 [mcp_servers.github.env]
-GITHUB_TOKEN = "{{GITHUB_PAT}}"
+GITHUB_TOKEN = "YOUR_GITHUB_PAT"
 
 [mcp_servers.git]
 type = "stdio"
@@ -102,9 +104,11 @@ args = ["-y", "@modelcontextprotocol/server-memory"]
 
 [mcp_servers.time]
 type = "stdio"
-command = "npx"
-args = ["-y", "@modelcontextprotocol/server-time"]
+command = "HOME_PATH/.local/share/mcp-time/node_modules/.bin/mcp-time-server"
 
 [notice.model_migrations]
 "gpt-5.2-codex" = "gpt-5.3-codex"
 "gpt-5.2" = "gpt-5.3-codex"
+
+# Common Codex config
+# Add your common TOML configuration here

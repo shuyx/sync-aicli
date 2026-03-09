@@ -47,6 +47,29 @@ replace_placeholders() {
     "$src" > "$dst"
 }
 
+# ── 辅助：从 Obsidian 密钥金库注入真实密钥 ────────────────
+inject_secrets() {
+  local file="$1"
+  local secrets_file="${OBSIDIAN_PATH}/Openclaw/secrets.env"
+  if [[ ! -f "$secrets_file" ]]; then
+    echo "  ⚠️  密钥金库不存在: $secrets_file"
+    echo "      请手动创建或从主力机同步 Obsidian Vault"
+    return
+  fi
+  set +u
+  source "$secrets_file"
+  set -u
+  sed -i '' \
+    -e "s|__SECRET_GITHUB_PAT__|${SECRET_GITHUB_PAT:-}|g" \
+    -e "s|__SECRET_AI4SCHOLAR_TOKEN__|${SECRET_AI4SCHOLAR_TOKEN:-}|g" \
+    -e "s|__SECRET_EXA_API_KEY__|${SECRET_EXA_API_KEY:-}|g" \
+    -e "s|__SECRET_WEB_SEARCH_PRIME_TOKEN__|${SECRET_WEB_SEARCH_PRIME_TOKEN:-}|g" \
+    -e "s|__SECRET_BRAVE_API_KEY__|${SECRET_BRAVE_API_KEY:-}|g" \
+    -e "s|__SECRET_TAVILY_API_KEY__|${SECRET_TAVILY_API_KEY:-}|g" \
+    "$file"
+  echo "  🔑 已注入密钥: $(basename "$file")"
+}
+
 # ── 辅助：安装单个配置文件 ───────────────────────────────
 install_config() {
   local repo_file="$1" target="$2" label="$3" needs_replace="${4:-false}"
@@ -111,6 +134,7 @@ install_config \
   "${REPO_DIR}/antigravity/settings.json" \
   "${HOME_PATH}/.gemini/settings.json" \
   "Antigravity settings.json" "true"
+inject_secrets "${HOME_PATH}/.gemini/settings.json"
 install_config \
   "${REPO_DIR}/antigravity/GEMINI.md" \
   "${HOME_PATH}/.gemini/GEMINI.md" \

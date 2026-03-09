@@ -55,8 +55,30 @@ sync_skills() {
   fi
 }
 
+strip_secrets() {
+  local file="$1"
+  local secrets_file="${OBSIDIAN_PATH}/Openclaw/secrets.env"
+  if [[ ! -f "$secrets_file" ]]; then
+    echo "  ⚠️  密钥金库不存在: $secrets_file，跳过脱敏"
+    return
+  fi
+  set +u
+  source "$secrets_file"
+  set -u
+  sed -i '' \
+    -e "s|${SECRET_GITHUB_PAT:-__SKIP__}|__SECRET_GITHUB_PAT__|g" \
+    -e "s|${SECRET_AI4SCHOLAR_TOKEN:-__SKIP__}|__SECRET_AI4SCHOLAR_TOKEN__|g" \
+    -e "s|${SECRET_EXA_API_KEY:-__SKIP__}|__SECRET_EXA_API_KEY__|g" \
+    -e "s|${SECRET_WEB_SEARCH_PRIME_TOKEN:-__SKIP__}|__SECRET_WEB_SEARCH_PRIME_TOKEN__|g" \
+    -e "s|${SECRET_BRAVE_API_KEY:-__SKIP__}|__SECRET_BRAVE_API_KEY__|g" \
+    -e "s|${SECRET_TAVILY_API_KEY:-__SKIP__}|__SECRET_TAVILY_API_KEY__|g" \
+    "$file"
+  echo "  🔒 已脱敏: $(basename "$file")"
+}
+
 echo "── 配置文件 ──────────────────────────────────────────"
 to_template    "${HOME_PATH}/.gemini/settings.json"               "${REPO_DIR}/antigravity/settings.json"
+strip_secrets  "${REPO_DIR}/antigravity/settings.json"
 copy_direct    "${HOME_PATH}/.gemini/GEMINI.md"                   "${REPO_DIR}/antigravity/GEMINI.md"
 copy_direct    "${HOME_PATH}/.claude/settings.json"               "${REPO_DIR}/claude-code/settings.json"
 copy_direct    "${HOME_PATH}/.claude/CLAUDE.md"                   "${REPO_DIR}/claude-code/CLAUDE.md"

@@ -1,17 +1,17 @@
 {
-    "env": {
-        "ANTHROPIC_AUTH_TOKEN": "PROXY_MANAGED",
-        "ANTHROPIC_BASE_URL": "http://127.0.0.1:5000",
-        "CLAUDE_BASH_MAINTAIN_PROJECT_WORKING_DIR": "1",
-        "CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC": "1",
-        "CLAUDE_CODE_MAX_OUTPUT_TOKENS": "20000",
-        "DISABLE_ERROR_REPORTING": "1",
-        "DISABLE_TELEMETRY": "1",
-        "MAX_THINKING_TOKENS": "12000"
-    },
-    "model": "haiku",
-    "enabledPlugins": {
-        "antigravity-skills@antigravity-skills": true
-    },
-    "skipDangerousModePermissionPrompt": true
+  "env": {
+    "ANTHROPIC_AUTH_TOKEN": "PROXY_MANAGED",
+    "ANTHROPIC_BASE_URL": "http://127.0.0.1:5000",
+    "CLAUDE_BASH_MAINTAIN_PROJECT_WORKING_DIR": "1",
+    "CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC": "1",
+    "CLAUDE_CODE_MAX_OUTPUT_TOKENS": "20000",
+    "DISABLE_ERROR_REPORTING": "1",
+    "DISABLE_TELEMETRY": "1",
+    "MAX_THINKING_TOKENS": "12000"
+  },
+  "model": "haiku",
+  "enabledPlugins": {
+    "antigravity-skills@antigravity-skills": true
+  },
+  "skipDangerousModePermissionPrompt": true
 }
