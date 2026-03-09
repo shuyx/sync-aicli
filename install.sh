@@ -83,7 +83,7 @@ install_skills() {
     return
   fi
   mkdir -p "$dst"
-  cp -r "${src}/." "$dst/"
+  cp -r "${src}/." "$dst/" 2>/dev/null || true
   find "$dst" -name "*.sh" -exec chmod +x {} \; 2>/dev/null || true
   local count
   count=$(find "$src" -name "SKILL.md" | wc -l | tr -d ' ')

@@ -46,7 +46,7 @@ sync_skills() {
   local src="$1" dst="$2" label="$3"
   if [[ -d "$src" ]]; then
     mkdir -p "$dst"
-    rsync -a --delete --exclude='*.pyc' --exclude='__pycache__' \
+    rsync -a --no-links --delete --exclude='*.pyc' --exclude='__pycache__' \
           --exclude='.DS_Store' "${src}/" "$dst/"
     local count
     count=$(find "$dst" -name "SKILL.md" | wc -l | tr -d ' ')
