@@ -184,6 +184,11 @@ install_skills \
   "${HOME_PATH}/.agents/skills" \
   "Shared .agents/skills"
 
+install_skills \
+  "${REPO_DIR}/shared/agents-workflows" \
+  "${HOME_PATH}/.agents/workflows" \
+  "Shared .agents/workflows"
+
 # ═══════════════════════════════════════════════════════════
 print_header "📊 Step 5/5 — 能力同步验证报告"
 
