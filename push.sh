@@ -65,6 +65,7 @@ strip_secrets() {
   set +u
   source "$secrets_file"
   set -u
+  # Phase 1: 精确变量替换（从 secrets.env 读取的当前值）
   sed -i '' \
     -e "s|${SECRET_GITHUB_PAT:-__SKIP__}|__SECRET_GITHUB_PAT__|g" \
     -e "s|${SECRET_AI4SCHOLAR_TOKEN:-__SKIP__}|__SECRET_AI4SCHOLAR_TOKEN__|g" \
@@ -72,6 +73,13 @@ strip_secrets() {
     -e "s|${SECRET_WEB_SEARCH_PRIME_TOKEN:-__SKIP__}|__SECRET_WEB_SEARCH_PRIME_TOKEN__|g" \
     -e "s|${SECRET_BRAVE_API_KEY:-__SKIP__}|__SECRET_BRAVE_API_KEY__|g" \
     -e "s|${SECRET_TAVILY_API_KEY:-__SKIP__}|__SECRET_TAVILY_API_KEY__|g" \
+    "$file"
+  # Phase 2: 通用正则兜底（捕获任何残留的 PAT/Token，包括旧版或已更换的）
+  sed -i '' \
+    -e 's|github_pat_[A-Za-z0-9_]\{20,\}|__SECRET_GITHUB_PAT__|g' \
+    -e 's|ghp_[A-Za-z0-9]\{20,\}|__SECRET_GITHUB_PAT__|g' \
+    -e 's|sk-user-[a-f0-9]\{20,\}|__SECRET_AI4SCHOLAR_TOKEN__|g' \
+    -e 's|tvly-[A-Za-z0-9_-]\{20,\}|__SECRET_TAVILY_API_KEY__|g' \
     "$file"
   echo "  🔒 已脱敏: $(basename "$file")"
 }
