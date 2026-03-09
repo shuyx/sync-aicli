@@ -12,7 +12,7 @@ HOME_PATH="/Users/${CURRENT_USER}"
 OBSIDIAN_PATH=""
 case "$CURRENT_USER" in
   "mac-minishu") OBSIDIAN_PATH="/Users/mac-minishu/Obsidian/kevinob" ;;
-  "yuanxin") OBSIDIAN_PATH="/Users/yuanxin/documents/kevinob" ;;
+  "yuanxin") OBSIDIAN_PATH="/Users/yuanxin/Documents/kevinob" ;;
 esac
 if [[ -z "$OBSIDIAN_PATH" ]]; then
   echo "⚠️  未识别用户名: $CURRENT_USER，请输入 Obsidian Vault 路径："
@@ -57,7 +57,7 @@ sync_skills() {
 
 strip_secrets() {
   local file="$1"
-  local secrets_file="${OBSIDIAN_PATH}/Openclaw/secrets.env"
+  local secrets_file="${OBSIDIAN_PATH}/secrets.env"
   if [[ ! -f "$secrets_file" ]]; then
     echo "  ⚠️  密钥金库不存在: $secrets_file，跳过脱敏"
     return

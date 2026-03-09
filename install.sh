@@ -16,7 +16,7 @@ HOME_PATH="/Users/${CURRENT_USER}"
 # ── 机器→Obsidian 路径映射 ────────────────────────────────
 case "$CURRENT_USER" in
   "mac-minishu") OBSIDIAN_PATH="/Users/mac-minishu/Obsidian/kevinob" ;;
-  "yuanxin") OBSIDIAN_PATH="/Users/yuanxin/documents/kevinob" ;;
+  "yuanxin") OBSIDIAN_PATH="/Users/yuanxin/Documents/kevinob" ;;
   *)
     echo "⚠️  未识别用户名: $CURRENT_USER，请手动输入 Obsidian Vault 路径："
     read -r OBSIDIAN_PATH
@@ -50,7 +50,7 @@ replace_placeholders() {
 # ── 辅助：从 Obsidian 密钥金库注入真实密钥 ────────────────
 inject_secrets() {
   local file="$1"
-  local secrets_file="${OBSIDIAN_PATH}/Openclaw/secrets.env"
+  local secrets_file="${OBSIDIAN_PATH}/secrets.env"
   if [[ ! -f "$secrets_file" ]]; then
     echo "  ⚠️  密钥金库不存在: $secrets_file"
     echo "      请手动创建或从主力机同步 Obsidian Vault"
