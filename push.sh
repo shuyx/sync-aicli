@@ -46,7 +46,7 @@ sync_skills() {
   if [[ -d "$src" ]]; then
     mkdir -p "$dst"
     rsync -a --no-links --delete --exclude='*.pyc' --exclude='__pycache__' \
-          --exclude='.DS_Store' "${src}/" "$dst/"
+          --exclude='.DS_Store' --exclude='.git' "${src}/" "$dst/"
     local count
     count=$(find "$dst" -name "SKILL.md" | wc -l | tr -d ' ')
     echo "  ✅ $label ($count skills)"
