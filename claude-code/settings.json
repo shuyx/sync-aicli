@@ -9,7 +9,7 @@
     "DISABLE_TELEMETRY": "1",
     "MAX_THINKING_TOKENS": "12000"
   },
-  "model": "haiku",
+  "model": "opus",
   "enabledPlugins": {
     "antigravity-skills@antigravity-skills": true
   },
